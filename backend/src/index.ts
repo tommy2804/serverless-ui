@@ -1,7 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose, { ErrorHandlingMiddlewareFunction } from 'mongoose';
 import { app } from './app';
 
 import dotenv from 'dotenv';
+import { CustomError } from './errors/custom-error';
 
 dotenv.config();
 
@@ -36,7 +37,7 @@ const start = async () => {
   });
 
   app.listen(process.env.PORT, () => {
-    console.log('Listening on port 3000!!');
+    console.log(`Listening on port ${process.env.PORT} !!`);
   });
 };
 
