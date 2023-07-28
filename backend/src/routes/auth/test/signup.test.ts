@@ -3,7 +3,7 @@ import { app } from '../../../app';
 
 it('return a 201 on successful signup', async () => {
   return request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       email: 'test@test.com',
       password: 'password',
@@ -14,7 +14,7 @@ it('return a 201 on successful signup', async () => {
 });
 
 it('return a 400 with invalid email', async () => {
-  return request(app).post('/api/users/signup').send({
+  return request(app).post('/api/auth/signup').send({
     email: 'dsfadsfa',
     password: 'password',
     firstName: 'test',
@@ -24,7 +24,7 @@ it('return a 400 with invalid email', async () => {
 
 it('return a 400 with invalid password', async () => {
   return request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       email: 'dsfadsfa',
       password: 'p',
@@ -36,13 +36,13 @@ it('return a 400 with invalid password', async () => {
 
 it('return a 400 with missing email and pass', async () => {
   await request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       email: 'test@test.com',
     })
     .expect(400);
   await request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       password: 'password',
     })
@@ -50,7 +50,7 @@ it('return a 400 with missing email and pass', async () => {
 });
 it('disallows duplicate emails', async () => {
   await request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       email: 'test@test.com',
       password: 'password',
@@ -59,7 +59,7 @@ it('disallows duplicate emails', async () => {
     })
     .expect(201);
   await request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       email: 'test@test.com',
       password: 'password',
@@ -71,7 +71,7 @@ it('disallows duplicate emails', async () => {
 
 it('sets a cookie after successful signup', async () => {
   const res = await request(app)
-    .post('/api/users/signup')
+    .post('/api/auth/signup')
     .send({
       email: 'test@test.com',
       password: 'password',

@@ -6,8 +6,7 @@ import { ROLE } from '../../types/role';
 import { body } from 'express-validator';
 import { validateRequest } from '../../middlewares/validate-request';
 import { BadRequestError } from '../../errors/bad-request-error';
-
-//create user
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -27,29 +26,36 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { email, password, firstName, lastName } = req.body;
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      throw new BadRequestError('Email in use');
+
+    try {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        throw new BadRequestError('Email in use');
+      }
+
+      const user = User.build({
+        email,
+        password,
+        firstName,
+        lastName,
+        user: firstName + ' ' + lastName,
+        role: ROLE.USER,
+      });
+
+      const savedUser = await user.save();
+
+      const currentUser = req.currentUser;
+      if (currentUser) {
+        await User.updateOne({ id: currentUser.id }, { $push: { usersCreated: savedUser.id } });
+      }
+
+      res.status(201).send(user);
+    } catch (error) {
+      res.status(500).send({ message: 'Failed to create user' });
     }
-    const user = User.build({
-      email,
-      password,
-      firstName,
-      lastName,
-      user: firstName + ' ' + lastName,
-      role: ROLE.USER,
-    });
-
-    const savedUser = await user.save();
-    // add the user to usersCreated list
-    const currentUser = req.currentUser;
-
-    if (currentUser) {
-      await User.updateOne({ _id: currentUser.id }, { $push: { usersCreated: savedUser.id } });
-    }
-
-    res.status(201).send(user);
   }
 );
+
+// ... (export statement) ...
 
 export { router as createUserRouter };
