@@ -7,9 +7,6 @@ interface UserPayload {
   email: string;
   role: ROLE;
 }
-
-// add currentUser to the Request interface
-// so that we can use it in the routes
 declare global {
   namespace Express {
     interface Request {
