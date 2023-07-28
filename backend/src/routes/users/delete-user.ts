@@ -20,11 +20,14 @@ router.delete('/api/users/:id', requireAuth, requireRole, async (req: Request, r
     if (!user) {
       throw new BadRequestError('This user does not exist');
     }
+    if (user.role === ROLE.ADMIN) {
+      throw new NotAuthorizedError('only master can delete admin users');
+    }
     await User.deleteOne({ id: user.id });
-    res.status(200).send('User deleted successfully');
+    res.status(201).send('User deleted successfully');
   } catch (error) {
     res.status(500).send({ message: 'Failed to delete user' });
   }
 });
 
-export { router as userRouter };
+export { router as deleteUserRouter };

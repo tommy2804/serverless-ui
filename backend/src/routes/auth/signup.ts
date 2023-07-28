@@ -47,12 +47,10 @@ router.post(
       },
       process.env.JWT_KEY!
     );
-    // jwt.sign() returns a string
+
     req.session = {
       jwt: userJwt,
     };
-
-    // Store it on session object
 
     res.status(201).send({ user, token: userJwt });
   }

@@ -11,6 +11,8 @@ import { currentUser } from './middlewares/current-user';
 
 import { getUsersRouter } from './routes/users/get-users';
 import { createUserRouter } from './routes/users/create-user';
+import { deleteUserRouter } from './routes/users/delete-user';
+import { editUserRouter } from './routes/users/edit-user';
 
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
@@ -36,6 +38,8 @@ app.use(signupRouter);
 
 app.use(getUsersRouter);
 app.use(createUserRouter);
+app.use(editUserRouter);
+app.use(deleteUserRouter);
 
 // handles the case where the route is not found
 app.all('*', async () => {
