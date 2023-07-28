@@ -1,15 +1,20 @@
 import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
 import { User } from '../../models/user';
+import { requireAuth } from '../../middlewares/require-auth';
+import { requireRole } from '../../middlewares/require-role';
+import { ROLE } from '../../types/role';
+import { body } from 'express-validator';
 import { validateRequest } from '../../middlewares/validate-request';
 import { BadRequestError } from '../../errors/bad-request-error';
-import jwt from 'jsonwebtoken';
-import { ROLE } from '../../types/role';
+
+//create user
 
 const router = express.Router();
 
 router.post(
-  '/api/auth/signup',
+  '/api/users',
+  requireAuth,
+  requireRole,
   [
     body('email').isEmail().withMessage('Email must be valid'),
     body('password')
@@ -19,11 +24,9 @@ router.post(
     body('firstName').not().isEmpty().withMessage('First name is required'),
     body('lastName').not().isEmpty().withMessage('Last name is required'),
   ],
-
   validateRequest,
   async (req: Request, res: Response) => {
     const { email, password, firstName, lastName } = req.body;
-
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw new BadRequestError('Email in use');
@@ -34,29 +37,19 @@ router.post(
       firstName,
       lastName,
       user: firstName + ' ' + lastName,
-      role: ROLE.ADMIN,
+      role: ROLE.USER,
     });
-    await user.save();
 
-    // Generate JWT
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-      },
-      process.env.JWT_KEY!
-    );
-    // jwt.sign() returns a string
-    req.session = {
-      jwt: userJwt,
-    };
+    const savedUser = await user.save();
+    // add the user to usersCreated list
+    const currentUser = req.currentUser;
 
-    // Store it on session object
+    if (currentUser) {
+      await User.updateOne({ _id: currentUser.id }, { $push: { usersCreated: savedUser.id } });
+    }
 
-    res.status(201).send({ user, token: userJwt });
+    res.status(201).send(user);
   }
 );
 
-export { router as signupRouter };
-// kubectl create secret generic jwt-secret --from-leteral=JWT_KEY=Tommy2
+export { router as createUserRouter };

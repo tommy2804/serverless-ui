@@ -8,6 +8,10 @@ import { signinRouter } from './routes/auth/signin';
 import { signupRouter } from './routes/auth/signup';
 import { signoutRouter } from './routes/auth/signout';
 import { currentUser } from './middlewares/current-user';
+
+import { getUsersRouter } from './routes/users/get-users';
+import { createUserRouter } from './routes/users/create-user';
+
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
 
@@ -29,6 +33,9 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+
+app.use(getUsersRouter);
+app.use(createUserRouter);
 
 // handles the case where the route is not found
 app.all('*', async () => {

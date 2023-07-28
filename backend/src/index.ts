@@ -36,7 +36,7 @@ const start = async () => {
     console.log('Mongoose connection is disconnected...');
   });
 
-  app.listen(process.env.PORT, () => {
+  app.listen(process.env.PORT || 5000, () => {
     console.log(`Listening on port ${process.env.PORT} !!`);
   });
 };

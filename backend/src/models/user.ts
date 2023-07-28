@@ -11,6 +11,7 @@ interface UserAttrs {
   firstName: string;
   lastName: string;
   role: string;
+  usersCreated?: [];
 }
 
 // ann interface that describes the properties
@@ -28,6 +29,7 @@ interface UserDoc extends mongoose.Document {
   firstName: string;
   lastName: string;
   role: string;
+  usersCreated?: [];
 }
 
 const userSchema = new mongoose.Schema(
@@ -55,16 +57,22 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ROLE,
-      default: ROLE.USER,
+      default: ROLE.ADMIN,
       required: true,
     },
+    usersCreated: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   // this is a mongoose option that will transform the document
   // before it is returned to the request
   // the doc is the document that is being returned
   // the ret is the object that is being returned
   {
-    // here we are telling mongoose to transform the _id to id and delete the password and __v
+    // here we are telling mongoose to transform the fields
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
@@ -72,6 +80,9 @@ const userSchema = new mongoose.Schema(
         delete ret._id;
         delete ret.password;
         delete ret.__v;
+        if (ret.role == ROLE.USER) {
+          delete ret.usersCreated;
+        }
       },
     },
   }
