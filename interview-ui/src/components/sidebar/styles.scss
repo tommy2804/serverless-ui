@@ -1,0 +1,41 @@
+.List-nav {
+  &:hover {
+    background-color: 'white';
+  }
+}
+
+.account-footer {
+  display: flex;
+  flex-direction: row;
+}
+
+.account {
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
+.select-nav {
+  height: 32px;
+}
+
+.sign-out-item {
+  width: 20px;
+  height: 20px;
+  padding-left: 0px;
+  right: 10px;
+  top: 10px;
+}
+
+.sign-out-item:hover {
+  background-color: transparent;
+}
+
+.logOut {
+  min-width: 0 !important;
+}
+
+.profile {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

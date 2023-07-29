@@ -6,7 +6,7 @@ type resType = {
   message: string;
 };
 
-const getUsers = async (): Promise<User[]> => {
+const getUsers = async (): Promise<AxiosResponse<User[]>> => {
   return api.get('/users');
 };
 
