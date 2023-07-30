@@ -16,15 +16,20 @@ declare global {
 }
 
 export const currentUser = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.session?.jwt) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return next();
   }
 
+  const token = authHeader.split(' ')[1];
+
   try {
-    const decoded = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
+    const decoded = jwt.verify(token, process.env.JWT_KEY!) as UserPayload;
+
     req.currentUser = decoded;
   } catch (error) {
-    return next();
+    console.log('Invalid Token');
   }
 
   next();

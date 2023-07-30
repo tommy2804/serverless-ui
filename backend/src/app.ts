@@ -2,6 +2,7 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
+import cors from 'cors';
 // auth routes
 import { currentUserRouter } from './routes/auth/current-user';
 import { signinRouter } from './routes/auth/signin';
@@ -22,6 +23,7 @@ const app = express();
 // and should trust the proxy to handle the https connection
 app.set('trust proxy', true);
 app.use(json());
+app.use(cors());
 app.use(
   cookieSession({
     signed: false,
