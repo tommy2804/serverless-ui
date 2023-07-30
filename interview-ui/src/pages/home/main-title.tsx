@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
-import createUserDialog from './create-user-dialog';
+import React, { useState, useContext } from "react";
+import createUserDialog from "./create-user-dialog";
 
-import { UserContext } from '../../state/users-context';
-import { User } from '../../types/user';
-import { ROLE } from '../../types/role';
+import { UserContext } from "../../state/users-context";
+import { User } from "../../types/user";
+import { ROLE } from "../../types/role";
 
 interface titleProps {
   user: User;
@@ -18,14 +18,17 @@ const Title: React.FC<titleProps> = ({ user }) => {
 
   const handleOpenSwal = async () => {
     try {
-      const result = await createUserDialog({ showPassword, handlePasswordToggle });
+      const result = await createUserDialog({
+        showPassword,
+        handlePasswordToggle,
+      });
 
       if (result.value) {
         const { password, email, firstName, lastName } = result.value;
         onCreateUser({ email, password, lastName, firstName });
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
   return (
@@ -33,11 +36,16 @@ const Title: React.FC<titleProps> = ({ user }) => {
       <div className="title">
         <div className="column">
           <p className="title-text">User Managment</p>
-          <p className="sub-title">{'Home > Permissions & accounts > User Management'}</p>
+          <p className="sub-title">
+            {"Home > Permissions & accounts > User Management"}
+          </p>
         </div>
         <div>
           {user?.role === ROLE.ADMIN ? (
-            <button className="add-user-button rmv-default" onClick={handleOpenSwal}>
+            <button
+              className="add-user-button rmv-default"
+              onClick={handleOpenSwal}
+            >
               <p className="title-text">Add user</p>
             </button>
           ) : null}

@@ -19,8 +19,7 @@ import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
 
 const app = express();
-// express aware that it is behind a proxy like nginx
-// and should trust the proxy to handle the https connection
+
 app.set('trust proxy', true);
 app.use(json());
 app.use(cors());
@@ -43,7 +42,6 @@ app.use(createUserRouter);
 app.use(editUserRouter);
 app.use(deleteUserRouter);
 
-// handles the case where the route is not found
 app.all('*', async () => {
   throw new NotFoundError('route did not found');
 });

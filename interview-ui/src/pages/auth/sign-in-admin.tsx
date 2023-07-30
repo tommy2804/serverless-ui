@@ -1,10 +1,10 @@
-import React from 'react';
-import { Formik } from 'formik';
-import { loginSchema, initialValuesLogin } from './auth';
-import { Box, Button, Grid, IconButton, Link, Typography } from '@mui/material';
-import { CustomTextField } from '../../components/input';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { SignInUser } from '../../types/auth';
+import React from "react";
+import { Formik } from "formik";
+import { loginSchema, initialValuesLogin } from "./auth";
+import { Box, Button, Grid, IconButton, Link, Typography } from "@mui/material";
+import { CustomTextField } from "../../components/input";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { SignInUser } from "../../types/auth";
 
 interface SignInProps {
   onSubmit?: (values: SignInUser) => void;
@@ -22,33 +22,52 @@ const SignInAdmin: React.FC<SignInProps> = ({
 }) => {
   return (
     <div className="auth-container">
-      <Formik initialValues={initialValuesLogin} validationSchema={loginSchema} onSubmit={() => {}}>
+      <Formik
+        initialValues={initialValuesLogin}
+        validationSchema={loginSchema}
+        onSubmit={() => {}}
+      >
         {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}>
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <Typography component="h1" variant="h5">
                 Log in
               </Typography>
-              <Typography paddingTop={'1rem'} color={'GrayText'} component="text" variant="body2">
+              <Typography
+                paddingTop={"1rem"}
+                color={"GrayText"}
+                component="text"
+                variant="body2"
+              >
                 Enter Your credentials to access your account
               </Typography>
 
               <button className="google-contain rmv-default">
-                <img className="google-img" src={'/google-logo.png'} alt="drive" />
+                <img
+                  className="google-img"
+                  src={"/google-logo.png"}
+                  alt="drive"
+                />
                 <p>Log in with Google</p>
               </button>
               {/* or line */}
               <div className="or-line">
                 <div className="or-line__line"></div>
-                <span className="or-text">{'OR'}</span>
+                <span className="or-text">{"OR"}</span>
                 <div className="or-line__line"></div>
               </div>
 
-              <Box component="form" noValidate onSubmit={() => {}} sx={{ mt: 1 }}>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={() => {}}
+                sx={{ mt: 1 }}
+              >
                 <CustomTextField
                   margin="normal"
                   variant="outlined"
@@ -71,12 +90,13 @@ const SignInAdmin: React.FC<SignInProps> = ({
                   onBlur={handleBlur}
                   error={!!errors.password}
                   helperText={errors.password}
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   iconComponent={
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={handlePasswordToggle}
-                      edge="end">
+                      edge="end"
+                    >
                       {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   }
@@ -86,7 +106,8 @@ const SignInAdmin: React.FC<SignInProps> = ({
                   onClick={() => onSignin(values)}
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 3, backgroundColor: '#6638f0' }}>
+                  sx={{ mt: 3, mb: 3, backgroundColor: "#6638f0" }}
+                >
                   Sign In
                 </Button>
                 <Grid container>
@@ -96,7 +117,11 @@ const SignInAdmin: React.FC<SignInProps> = ({
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Button onClick={handleIsLogin} sx={{ color: '#6638f0' }} variant="outlined">
+                    <Button
+                      onClick={handleIsLogin}
+                      sx={{ color: "#6638f0" }}
+                      variant="outlined"
+                    >
                       {"Don't have an account? Sign Up"}
                     </Button>
                   </Grid>

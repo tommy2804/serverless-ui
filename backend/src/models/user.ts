@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 import { Password } from '../services/password';
 import { ROLE } from '../types/role';
 
-// an interface that describes the properties
-// that are required to create a new User
 interface UserAttrs {
   user: string;
   email: string;
@@ -14,14 +12,10 @@ interface UserAttrs {
   usersCreated?: [];
 }
 
-// ann interface that describes the properties
-// that a User Model has
 interface UserModel extends mongoose.Model<UserDoc> {
   build(attrs: UserAttrs): UserDoc;
 }
 
-// an interface that describes the properties
-// that a User Document has
 interface UserDoc extends mongoose.Document {
   user: string;
   email: string;
@@ -67,12 +61,8 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
-  // this is a mongoose option that will transform the document
-  // before it is returned to the request
-  // the doc is the document that is being returned
-  // the ret is the object that is being returned
+
   {
-    // here we are telling mongoose to transform the fields
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;
@@ -88,7 +78,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// this is a mongoose middleware function that will run before the save function
 userSchema.pre('save', async function (done) {
   if (this.isModified('password')) {
     const hashed = await Password.toHash(this.get('password'));

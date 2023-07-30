@@ -1,9 +1,14 @@
-import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
-import Auth from './pages/auth/auth';
-import UserManagment from './pages/home';
+import {
+  BrowserRouter as Router,
+  Route,
+  Navigate,
+  Routes,
+} from "react-router-dom";
+import Auth from "./pages/auth/auth";
+import UserManagment from "./pages/home";
 
 function App() {
-  const currentToken = localStorage.getItem('userToken');
+  const currentToken = localStorage.getItem("userToken");
 
   const HomeWrapper = () => {
     return currentToken ? <UserManagment /> : <Navigate to="/auth" replace />;

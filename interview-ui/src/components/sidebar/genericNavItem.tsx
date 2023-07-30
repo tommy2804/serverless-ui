@@ -1,6 +1,6 @@
-import { SvgIconComponent } from '@mui/icons-material';
-import { Icon, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { SvgIconComponent } from "@mui/icons-material";
+import { Icon, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface NavItemProps {
   link: string;
