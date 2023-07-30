@@ -8,25 +8,24 @@ import { SettingsOutlined, RemoveCircleOutline } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { handleDelete } from './handleDelete';
 import { getUsers } from '../../api/users';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
+import Title from './main-title';
 
-interface UserManageProps {
-  user: User | null;
-}
+// const rows = [
+//   { id: 1, lastName: 'Snow', firstName: 'Jon', role: ROLE.USER },
+//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', role: ROLE.USER },
+//   { id: 3, lastName: 'Lannister', firstName: 'Jaime', role: ROLE.USER },
+//   { id: 4, lastName: 'Stark', firstName: 'Arya', role: ROLE.USER },
+//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', role: ROLE.USER },
+//   { id: 6, lastName: 'fdsdfs', firstName: 'fdjsfjk', role: ROLE.USER },
+//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', role: ROLE.USER },
+//   { id: 8, lastName: 'Frances', firstName: 'Rossini', role: ROLE.USER },
+//   { id: 9, lastName: 'Roxie', firstName: 'Harvey', role: ROLE.USER },
+// ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', role: ROLE.USER },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', role: ROLE.USER },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', role: ROLE.USER },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', role: ROLE.USER },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', role: ROLE.USER },
-  { id: 6, lastName: 'fdsdfs', firstName: 'fdjsfjk', role: ROLE.USER },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', role: ROLE.USER },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', role: ROLE.USER },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', role: ROLE.USER },
-];
-
-const UserManagment: React.FC<UserManageProps> = ({ user }) => {
+const UserManagment: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const currentUser = useCurrentUser();
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -68,7 +67,7 @@ const UserManagment: React.FC<UserManageProps> = ({ user }) => {
         };
         return (
           <>
-            {user?.role === ROLE.ADMIN ? (
+            {currentUser?.role === ROLE.ADMIN ? (
               <Box
                 justifyContent={'space-around'}
                 alignItems={'center'}
@@ -102,25 +101,28 @@ const UserManagment: React.FC<UserManageProps> = ({ user }) => {
     fetchUsers();
     console.log(users);
   }, []);
+
   return (
     <div className="flex">
-      <Sidebar user={user} />
-
-      {
-        <div style={{ height: '100%', width: '100%' }}>
-          <DataGrid
-            rows={users}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            pageSizeOptions={[5, 10]}
-            checkboxSelection
-          />
-        </div>
-      }
+      <Sidebar user={currentUser} />
+      <div className="container">
+        {
+          <div className="management-container">
+            <Title />
+            <DataGrid
+              rows={users}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
+              checkboxSelection
+            />
+          </div>
+        }
+      </div>
     </div>
   );
 };

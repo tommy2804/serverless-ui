@@ -1,38 +1,38 @@
 version: '3'
 services:
-  web:
+  react-app:
+    image: vite-react-app
     build:
-      context: ./react-app # Directory containing your Vite-based React app's Dockerfile
+      context: ./interview-ui/
       dockerfile: Dockerfile
     stdin_open: true
     ports:
-      - '3000:3000'
+      - '8080:8080'
     networks:
-      - mern-app
+      - interview-app
     depends_on:
-      - api
-  api:
+      - api-server
+  api-server:
+    image: api-server
     build:
-      context: ./api # Directory containing your Mongoose-based API's Dockerfile
+      context: ./backend/ # Directory containing your Mongoose-based API's Dockerfile
       dockerfile: Dockerfile
-    volumes:
-      - ./api:/app
-    working_dir: /app
-    command: npm run dev # Replace this with your API's development command
     ports:
-      - '5000:5000'
+      - '5001:5001'
     networks:
-      - mern-app
+      - interview-app
+    depends_on:
+      - mongo
   mongo:
     image: mongo:3.6.19-xenial
     ports:
       - '27017:27017'
     networks:
-      - mern-app
+      - interview-app
     volumes:
       - mongo-data:/data/db
 networks:
-  mern-app:
+  interview-app:
     driver: bridge
 volumes:
   mongo-data:

@@ -21,6 +21,7 @@ import GenericNavItem from './genericNavItem';
 import { signOut } from '../../api/auth';
 import './styles.scss';
 import { User } from '../../types/user';
+// import CreateUserDialog from '../../pages/home/create-user-dialog';
 
 interface SideBarProps {
   user: User | null;
@@ -92,6 +93,13 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
           </List>
         </Box>
         <Box>
+          <List className="account-footer" component="nav" aria-label="account option">
+            <ListItem style={{ padding: 0, width: 210 }}>
+              <ListItemButton className="account">
+                <ListItemText className="profile" primary={'Create New User'} />
+              </ListItemButton>
+            </ListItem>
+          </List>
           <Divider />
 
           {/* Account option */}
@@ -126,6 +134,7 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
           </List>
         </Box>
       </Box>
+      {/* <CreateUserDialog /> */}
     </>
   );
 };
