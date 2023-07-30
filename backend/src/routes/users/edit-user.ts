@@ -6,8 +6,6 @@ import { body } from 'express-validator';
 import { validateRequest } from '../../middlewares/validate-request';
 import { BadRequestError } from '../../errors/bad-request-error';
 
-//create user
-
 const router = express.Router();
 
 router.put(

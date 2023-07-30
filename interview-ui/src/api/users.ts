@@ -1,13 +1,13 @@
-import { User } from '../types/user';
-import api from '../utils/api';
-import { AxiosResponse } from 'axios';
+import { User } from "../types/user";
+import api from "../utils/api";
+import { AxiosResponse } from "axios";
 
 type resType = {
   message: string;
 };
 
 const getUsers = async (): Promise<AxiosResponse<User[]>> => {
-  return api.get('/users');
+  return api.get("/users");
 };
 
 const getUserId = async (id: string): Promise<User> => {
@@ -37,7 +37,7 @@ const createUser = async (
   lastName: string,
   firstName: string
 ): Promise<AxiosResponse<User>> => {
-  return api.post('/users', { email, password, firstName, lastName });
+  return api.post("/users", { email, password, firstName, lastName });
 };
 
 export { getUsers, deleteUser, editUser, getUserId, createUser };

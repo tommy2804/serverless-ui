@@ -1,9 +1,9 @@
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-import withReactContent from 'sweetalert2-react-content';
-import { Formik, Form, FormikProps, FormikErrors } from 'formik';
-import { SignUpUser } from '../../types/auth';
-import { initialValuesRegister } from '../auth/auth';
-import { CustomTextField } from '../../components/input';
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import withReactContent from "sweetalert2-react-content";
+import { Formik, Form, FormikProps, FormikErrors } from "formik";
+import { SignUpUser } from "../../types/auth";
+import { initialValuesRegister } from "../auth/auth";
+import { CustomTextField } from "../../components/input";
 
 interface editUserDialogProps {
   name?: string;
@@ -23,13 +23,14 @@ const editUserDialog = async (props: editUserDialogProps) => {
         validate={(values) => {
           const errors: FormikErrors<SignUpUser> = {};
           if (!values.email || !values.firstName || !values.lastName) {
-            errors.email = 'Required';
-            errors.firstName = 'Required';
-            errors.lastName = 'Required';
+            errors.email = "Required";
+            errors.firstName = "Required";
+            errors.lastName = "Required";
           }
           return errors;
         }}
-        onSubmit={() => {}}>
+        onSubmit={() => {}}
+      >
         {({ values, errors, handleChange, handleBlur }) => (
           <Form>
             <CustomTextField
@@ -70,7 +71,7 @@ const editUserDialog = async (props: editUserDialogProps) => {
       </Formik>
     ),
     didOpen: () => {
-      Swal.getPopup()!.querySelector('input')?.focus();
+      Swal.getPopup()!.querySelector("input")?.focus();
     },
     preConfirm: async () => {
       await formikRef.submitForm();

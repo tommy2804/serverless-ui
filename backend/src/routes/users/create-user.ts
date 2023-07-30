@@ -56,6 +56,4 @@ router.post(
   }
 );
 
-// ... (export statement) ...
-
 export { router as createUserRouter };

@@ -1,33 +1,33 @@
-import * as yup from 'yup';
-import './auth.scss';
-import { useState } from 'react';
-import { SignInUser, SignUpUser } from '../../types/auth';
-import SignInAdmin from './sign-in-admin';
-import SignUpAdmin from './sign-up-admin';
-import { signUp, signIn } from '../../api/auth';
+import * as yup from "yup";
+import "./auth.scss";
+import { useState } from "react";
+import { SignInUser, SignUpUser } from "../../types/auth";
+import SignInAdmin from "./sign-in-admin";
+import SignUpAdmin from "./sign-up-admin";
+import { signUp, signIn } from "../../api/auth";
 
 export const registerSchema = yup.object().shape({
-  firstName: yup.string().required('required'),
-  lastName: yup.string().required('required'),
-  email: yup.string().email('invalid email').required('required'),
-  password: yup.string().required('required'),
+  firstName: yup.string().required("required"),
+  lastName: yup.string().required("required"),
+  email: yup.string().email("invalid email").required("required"),
+  password: yup.string().required("required"),
 });
 
 export const loginSchema = yup.object().shape({
-  email: yup.string().email('invalid email').required('required'),
-  password: yup.string().required('required'),
+  email: yup.string().email("invalid email").required("required"),
+  password: yup.string().required("required"),
 });
 
 export const initialValuesRegister: SignUpUser = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
 };
 
 export const initialValuesLogin: SignInUser = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 };
 
 const Auth = () => {
@@ -47,8 +47,8 @@ const Auth = () => {
     const { data } = await signUp(email, password, lastName, firstName);
 
     if (data) {
-      localStorage.setItem('userToken', data.token);
-      window.location.href = '/';
+      localStorage.setItem("userToken", data.token);
+      window.location.href = "/";
     }
   };
 
@@ -56,8 +56,8 @@ const Auth = () => {
     const { email, password } = values;
     const { data } = await signIn(email, password);
     if (data) {
-      localStorage.setItem('userToken', data.token);
-      window.location.href = '/';
+      localStorage.setItem("userToken", data.token);
+      window.location.href = "/";
     }
   };
 

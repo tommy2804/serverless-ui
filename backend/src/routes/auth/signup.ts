@@ -57,4 +57,3 @@ router.post(
 );
 
 export { router as signupRouter };
-// kubectl create secret generic jwt-secret --from-leteral=JWT_KEY=Tommy2

@@ -1,11 +1,11 @@
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-import withReactContent from 'sweetalert2-react-content';
-import { Formik, Form, FormikProps, FormikErrors } from 'formik';
-import { SignUpUser } from '../../types/auth';
-import { initialValuesRegister } from '../auth/auth';
-import { CustomTextField } from '../../components/input';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import withReactContent from "sweetalert2-react-content";
+import { Formik, Form, FormikProps, FormikErrors } from "formik";
+import { SignUpUser } from "../../types/auth";
+import { initialValuesRegister } from "../auth/auth";
+import { CustomTextField } from "../../components/input";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 
 interface createUserDialogProps {
   showPassword?: boolean;
@@ -19,22 +19,28 @@ const createUserDialog = async (props: createUserDialogProps) => {
   let formikRef!: FormikProps<SignUpUser>;
 
   const result = await ReactSwal.fire({
-    title: 'Create New User',
+    title: "Create New User",
     html: (
       <Formik<SignUpUser>
         innerRef={(ref) => (formikRef = ref)}
         initialValues={initialValuesRegister}
         validate={(values) => {
           const errors: FormikErrors<SignUpUser> = {};
-          if (!values.email || !values.password || !values.firstName || !values.lastName) {
-            errors.email = 'Required';
-            errors.password = 'Required';
-            errors.firstName = 'Required';
-            errors.lastName = 'Required';
+          if (
+            !values.email ||
+            !values.password ||
+            !values.firstName ||
+            !values.lastName
+          ) {
+            errors.email = "Required";
+            errors.password = "Required";
+            errors.firstName = "Required";
+            errors.lastName = "Required";
           }
           return errors;
         }}
-        onSubmit={() => {}}>
+        onSubmit={() => {}}
+      >
         {({ values, errors, handleChange, handleBlur }) => (
           <Form>
             <CustomTextField
@@ -81,12 +87,13 @@ const createUserDialog = async (props: createUserDialogProps) => {
               onBlur={handleBlur}
               error={!!errors.password}
               helperText={errors.password}
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               iconComponent={
                 <IconButton
                   aria-label="toggle password visibility"
                   onClick={handlePasswordToggle} // Use the handlePasswordToggle prop here
-                  edge="end">
+                  edge="end"
+                >
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               }
@@ -96,7 +103,7 @@ const createUserDialog = async (props: createUserDialogProps) => {
       </Formik>
     ),
     didOpen: () => {
-      Swal.getPopup()!.querySelector('input')?.focus();
+      Swal.getPopup()!.querySelector("input")?.focus();
     },
     preConfirm: async () => {
       await formikRef.submitForm();
