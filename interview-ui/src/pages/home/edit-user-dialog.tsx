@@ -4,31 +4,26 @@ import { Formik, Form, FormikProps, FormikErrors } from 'formik';
 import { SignUpUser } from '../../types/auth';
 import { initialValuesRegister } from '../auth/auth';
 import { CustomTextField } from '../../components/input';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
 
-interface createUserDialogProps {
-  showPassword?: boolean;
-  handlePasswordToggle: () => void;
+interface editUserDialogProps {
+  name?: string;
 }
 
-const createUserDialog = async (props: createUserDialogProps) => {
-  const { showPassword, handlePasswordToggle } = props;
+const editUserDialog = async (props: editUserDialogProps) => {
   const ReactSwal = withReactContent(Swal);
 
   let formikRef!: FormikProps<SignUpUser>;
 
   const result = await ReactSwal.fire({
-    title: 'Create New User',
+    title: `do you want to edit ${props.name}?`,
     html: (
       <Formik<SignUpUser>
         innerRef={(ref) => (formikRef = ref)}
         initialValues={initialValuesRegister}
         validate={(values) => {
           const errors: FormikErrors<SignUpUser> = {};
-          if (!values.email || !values.password || !values.firstName || !values.lastName) {
+          if (!values.email || !values.firstName || !values.lastName) {
             errors.email = 'Required';
-            errors.password = 'Required';
             errors.firstName = 'Required';
             errors.lastName = 'Required';
           }
@@ -70,27 +65,6 @@ const createUserDialog = async (props: createUserDialogProps) => {
               error={!!errors.email}
               helperText={errors.email}
             />
-
-            <CustomTextField
-              margin="normal"
-              variant="outlined"
-              name="password"
-              label="Password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={!!errors.password}
-              helperText={errors.password}
-              type={showPassword ? 'text' : 'password'}
-              iconComponent={
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handlePasswordToggle} // Use the handlePasswordToggle prop here
-                  edge="end">
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              }
-            />
           </Form>
         )}
       </Formik>
@@ -112,4 +86,4 @@ const createUserDialog = async (props: createUserDialogProps) => {
   return result;
 };
 
-export default createUserDialog;
+export default editUserDialog;

@@ -24,7 +24,7 @@ const editUser = async (
   lastName: string | undefined,
   id: string | undefined
 ): Promise<AxiosResponse<User>> => {
-  return api.post(`/users/${id}`, {
+  return api.put(`/users/${id}`, {
     email,
     firstName,
     lastName,
@@ -36,7 +36,7 @@ const createUser = async (
   password: string,
   lastName: string,
   firstName: string
-): Promise<User> => {
+): Promise<AxiosResponse<User>> => {
   return api.post('/users', { email, password, firstName, lastName });
 };
 

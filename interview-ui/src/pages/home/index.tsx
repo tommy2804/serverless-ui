@@ -1,31 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import Sidebar from '../../components/sidebar/side-bar';
-import { User } from '../../types/user';
 import './styles.scss';
 import { ROLE } from '../../types/role';
 import { SettingsOutlined, RemoveCircleOutline } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { handleDelete } from './handleDelete';
-import { getUsers } from '../../api/users';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import Title from './main-title';
-
-// const rows = [
-//   { id: 1, lastName: 'Snow', firstName: 'Jon', role: ROLE.USER },
-//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', role: ROLE.USER },
-//   { id: 3, lastName: 'Lannister', firstName: 'Jaime', role: ROLE.USER },
-//   { id: 4, lastName: 'Stark', firstName: 'Arya', role: ROLE.USER },
-//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', role: ROLE.USER },
-//   { id: 6, lastName: 'fdsdfs', firstName: 'fdjsfjk', role: ROLE.USER },
-//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', role: ROLE.USER },
-//   { id: 8, lastName: 'Frances', firstName: 'Rossini', role: ROLE.USER },
-//   { id: 9, lastName: 'Roxie', firstName: 'Harvey', role: ROLE.USER },
-// ];
+import { UserContext } from '../../state/users-context';
+import editUserDialog from './edit-user-dialog';
 
 const UserManagment: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
   const currentUser = useCurrentUser();
+  const { users, onDeleteUser, onEditUser } = useContext(UserContext);
+
+  const handleEditUser = async (id: string) => {
+    try {
+      const result = await editUserDialog({
+        name: users?.find((user) => user.id === id)?.firstName,
+      });
+      if (result.value) {
+        const { email, firstName, lastName } = result.value;
+        onEditUser(id, { email, lastName, firstName });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -61,10 +63,6 @@ const UserManagment: React.FC = () => {
       width: 300,
       align: 'center',
       renderCell: (params: GridCellParams) => {
-        const handleEdit = () => {
-          // Handle edit action here...
-          console.log(`Editing user with ID ${params.id}`);
-        };
         return (
           <>
             {currentUser?.role === ROLE.ADMIN ? (
@@ -73,13 +71,15 @@ const UserManagment: React.FC = () => {
                 alignItems={'center'}
                 display={'flex'}
                 width={'20rem'}>
-                <button className="rmv-default button" onClick={handleEdit}>
+                <button
+                  className="rmv-default button"
+                  onClick={() => handleEditUser(params.id.toString())}>
                   <SettingsOutlined />
                   <p>Modify User</p>
                 </button>
                 <button
                   className="rmv-default button"
-                  onClick={() => handleDelete(params.id.toString())}>
+                  onClick={() => handleDelete(() => onDeleteUser(params.id.toString()))}>
                   <RemoveCircleOutline />
                   <p>Delete User</p>
                 </button>
@@ -93,22 +93,13 @@ const UserManagment: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const { data } = await getUsers();
-      setUsers(data);
-    };
-    fetchUsers();
-    console.log(users);
-  }, []);
-
   return (
     <div className="flex">
       <Sidebar user={currentUser} />
       <div className="container">
         {
           <div className="management-container">
-            <Title />
+            <Title user={currentUser} />
             <DataGrid
               rows={users}
               columns={columns}
@@ -118,7 +109,6 @@ const UserManagment: React.FC = () => {
                 },
               }}
               pageSizeOptions={[5, 10]}
-              checkboxSelection
             />
           </div>
         }
