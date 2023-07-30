@@ -29,7 +29,7 @@ export const currentUser = (req: Request, res: Response, next: NextFunction) => 
 
     req.currentUser = decoded;
   } catch (error) {
-    console.log('Invalid Token');
+    console.error('Invalid Token');
   }
 
   next();

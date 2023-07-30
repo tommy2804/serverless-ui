@@ -11,7 +11,6 @@ import {
 import {
   InsertChartOutlined,
   AccountCircle,
-  LayersOutlined,
   PieChartOutlineOutlined,
   PeopleAltOutlined,
   HomeOutlined,
@@ -21,8 +20,34 @@ import GenericNavItem from './genericNavItem';
 import { signOut } from '../../api/auth';
 import './styles.scss';
 import { User } from '../../types/user';
-// import CreateUserDialog from '../../pages/home/create-user-dialog';
 
+const navArrayTop = [
+  {
+    link: '/',
+    style: { padding: 0, width: '100%', color: 'white' },
+    text: 'Home',
+    icon: HomeOutlined,
+  },
+  {
+    link: '/',
+    style: { padding: 0, width: '100%', color: 'white' },
+    text: 'Dashboard',
+    icon: InsertChartOutlined,
+  },
+
+  {
+    link: '/',
+    style: { padding: 0, width: '100%', color: 'white' },
+    text: 'Reporting',
+    icon: PieChartOutlineOutlined,
+  },
+  {
+    link: '/',
+    style: { padding: 0, width: '100%', color: 'white' },
+    text: 'Users',
+    icon: PeopleAltOutlined,
+  },
+];
 interface SideBarProps {
   user: User | null;
 }
@@ -33,38 +58,6 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
     localStorage.removeItem('userToken');
     window.location.href = '/auth';
   };
-  const navArrayTop = [
-    {
-      link: '/',
-      style: { padding: 0, width: '100%', color: 'white' },
-      text: 'Home',
-      icon: HomeOutlined,
-    },
-    {
-      link: '/',
-      style: { padding: 0, width: '100%', color: 'white' },
-      text: 'Dashboard',
-      icon: InsertChartOutlined,
-    },
-    {
-      link: '/',
-      style: { padding: 0, width: '100%', color: 'white' },
-      text: 'Events',
-      icon: LayersOutlined,
-    },
-    {
-      link: '/',
-      style: { padding: 0, width: '100%', color: 'white' },
-      text: 'Reporting',
-      icon: PieChartOutlineOutlined,
-    },
-    {
-      link: '/',
-      style: { padding: 0, width: '100%', color: 'white' },
-      text: 'Users',
-      icon: PeopleAltOutlined,
-    },
-  ];
 
   return (
     <>
@@ -73,7 +66,7 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
         sx={{
           width: 250,
           height: '100vh',
-          backgroundColor: '#2762f2',
+          backgroundColor: '#023033',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -93,19 +86,12 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
           </List>
         </Box>
         <Box>
-          <List className="account-footer" component="nav" aria-label="account option">
-            <ListItem style={{ padding: 0, width: 210 }}>
-              <ListItemButton className="account">
-                <ListItemText className="profile" primary={'Create New User'} />
-              </ListItemButton>
-            </ListItem>
-          </List>
           <Divider />
 
           {/* Account option */}
 
           <List className="account-footer" component="nav" aria-label="account option">
-            <ListItem style={{ padding: 0, width: 210 }}>
+            <ListItem style={{ padding: 0, width: 210, color: 'white' }}>
               <ListItemButton className="account">
                 <ListItemIcon>
                   <AccountCircle />

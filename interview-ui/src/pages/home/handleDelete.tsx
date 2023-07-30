@@ -1,7 +1,6 @@
 import Swal from 'sweetalert2';
-import { deleteUser } from '../../api/users';
 
-export const handleDelete = (id: string) => {
+export const handleDelete = (onDelete: () => void) => {
   // Handle delete action here...
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -24,7 +23,7 @@ export const handleDelete = (id: string) => {
     .then((result) => {
       if (result.isConfirmed) {
         swalWithBootstrapButtons.fire('Deleted!', 'User has been deleted from db.', 'success');
-        console.log('df');
+        onDelete();
       } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel
@@ -32,5 +31,4 @@ export const handleDelete = (id: string) => {
         swalWithBootstrapButtons.fire('Cancelled', 'User is not deleted:)', 'error');
       }
     });
-  console.log(`Deleting user with ID ${id}`);
 };

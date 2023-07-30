@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export const baseUrl = `http://localhost:5001/api`;
 const api = axios.create({
