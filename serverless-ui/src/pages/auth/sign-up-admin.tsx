@@ -62,25 +62,15 @@ const SignUpAdmin: React.FC<SignUpProps> = ({
                 <CustomTextField
                   margin="normal"
                   variant="outlined"
-                  name="firstName"
-                  label="First Name"
-                  value={values.firstName}
+                  name="username"
+                  label="User Name"
+                  value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={!!errors.firstName}
-                  helperText={errors.firstName}
+                  error={!!errors.username}
+                  helperText={errors.username}
                 />
-                <CustomTextField
-                  margin="normal"
-                  variant="outlined"
-                  name="lastName"
-                  label="Last Name"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={!!errors.lastName}
-                  helperText={errors.lastName}
-                />
+      
                 <CustomTextField
                   margin="normal"
                   variant="outlined"

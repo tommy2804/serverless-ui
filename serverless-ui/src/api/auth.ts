@@ -5,10 +5,9 @@ import { AxiosResponse } from "axios";
 const signUp = async (
   email: string,
   password: string,
-  lastName: string,
-  firstName: string
+  username: string
 ): Promise<AxiosResponse<AxiosResUser>> => {
-  return api.post("/auth/signup", { email, password, firstName, lastName });
+  return api.post("https://4ilfli2w14.execute-api.eu-central-1.amazonaws.com/test-invoke-stage/auth/signUp", { email, password, username, memberName:username });
 };
 
 const signIn = async (

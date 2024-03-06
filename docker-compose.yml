@@ -1,0 +1,39 @@
+version: '3'
+services:
+  react-app:
+    image: vite-react-app
+    build:
+      context: ./interview-ui/
+      dockerfile: Dockerfile
+    stdin_open: true
+    ports:
+      - '8080:8080'
+    networks:
+      - interview-app
+    depends_on:
+      - api-server
+  api-server:
+    image: api-server
+    build:
+      context: ./backend/ # Directory containing your Mongoose-based API's Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - '5001:5001'
+    networks:
+      - interview-app
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:3.6.19-xenial
+    ports:
+      - '27017:27017'
+    networks:
+      - interview-app
+    volumes:
+      - mongo-data:/data/db
+networks:
+  interview-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local

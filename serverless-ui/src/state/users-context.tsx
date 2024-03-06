@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { SignUpUser } from "../types/auth";
 import { deleteUser, createUser, editUser, getUsers } from "../api/users";
@@ -43,7 +44,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const onCreateUser = async (newUser: SignUpUser) => {
+  const onCreateUser = async (newUser: any) => {
     try {
       const { email, firstName, lastName, password } = newUser;
       const { data } = await createUser(email, password, lastName, firstName);
@@ -64,7 +65,7 @@ export const UsersProvider: React.FC<UsersProviderProps> = ({ children }) => {
     }
   };
 
-  const onEditUser = async (id: string, newData: SignUpUser) => {
+  const onEditUser = async (id: string, newData: any) => {
     try {
       const { email, firstName, lastName } = newData;
       const { data } = await editUser(email, firstName, lastName, id);

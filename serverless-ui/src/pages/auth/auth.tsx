@@ -7,8 +7,7 @@ import SignUpAdmin from "./sign-up-admin";
 import { signUp, signIn } from "../../api/auth";
 
 export const registerSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
+  username: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
 });
@@ -19,8 +18,7 @@ export const loginSchema = yup.object().shape({
 });
 
 export const initialValuesRegister: SignUpUser = {
-  firstName: "",
-  lastName: "",
+  username: "",
   email: "",
   password: "",
 };
@@ -43,8 +41,8 @@ const Auth = () => {
   };
 
   const onRegister = async (values: SignUpUser) => {
-    const { email, password, lastName, firstName } = values;
-    const { data } = await signUp(email, password, lastName, firstName);
+    const { email, password, username } = values;
+    const { data } = await signUp(email, password, username);
 
     if (data) {
       localStorage.setItem("userToken", data.token);
