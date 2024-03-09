@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SignInUser, SignUpUser } from "../../types/auth";
 import SignInAdmin from "./sign-in-admin";
 import SignUpAdmin from "./sign-up-admin";
-import { signUp, signIn } from "../../api/auth";
+import { useAuth } from "../../state/auth-context";
 
 export const registerSchema = yup.object().shape({
   username: yup.string().required("required"),
@@ -31,6 +31,7 @@ export const initialValuesLogin: SignInUser = {
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const { signUp, signIn } = useAuth();
 
   const handlePasswordToggle = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -42,7 +43,7 @@ const Auth = () => {
 
   const onRegister = async (values: SignUpUser) => {
     const { email, password, username } = values;
-    const { data } = await signUp(email, password, username);
+    const { data } = await signUp(username, email, password);
 
     if (data) {
       localStorage.setItem("userToken", data.token);
@@ -60,7 +61,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="container">
+    <div className='container'>
       {isLogin ? (
         <SignInAdmin
           handleIsLogin={handleIsLogin}

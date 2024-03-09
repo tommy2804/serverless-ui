@@ -27,7 +27,7 @@ build:
 	make cdk-build
 
 deploy:
-	# make build
+	make build
 	cd backend; \
 		cdk deploy --require-approval=never --profile tommy-dev
 

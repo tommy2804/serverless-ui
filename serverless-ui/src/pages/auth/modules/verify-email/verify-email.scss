@@ -1,0 +1,116 @@
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.verify-email-wrapper {
+  @extend .flex-center;
+  width: 50%;
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+  .verify-email-center-wrapper {
+    @extend .flex-center;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 380px;
+    .verify-email-header {
+      @extend .flex-center;
+      flex-direction: column;
+      gap: 1.5rem;
+      .verify-email-logo {
+        @extend .flex-center;
+        height: 48px;
+        width: 48px;
+        border: 1px solid var(--gray-550);
+        background-color: var(--white-color);
+        border-radius: 12px;
+        span {
+          font-family: 'Roboto';
+          font-size: 15px;
+          font-weight: 600;
+        }
+      }
+      .verify-email-title-wrapper {
+        @extend .flex-center;
+        flex-direction: column;
+        gap: 2px;
+        h1 {
+          margin: 0;
+        }
+        h3 {
+          margin: 0.8rem;
+          font-size: 16px;
+          font-weight: 400;
+          color: var(--gray-500);
+        }
+        h4 {
+          text-align: left;
+          margin: 0.8rem;
+          font-weight: 500;
+          color: var(--gray-900);
+        }
+      }
+    }
+    .verify-email-btn-wrapper {
+      @extend .flex-center;
+      flex-direction: column;
+      width: 100%;
+      gap: 1rem;
+      .verify-email-btn {
+        width: 100%;
+      }
+    }
+    .verify-email-inputs-wrapper {
+      @extend.flex-center;
+      gap: 5px;
+      // removes arrow from num input
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      // firefox support
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+      .verify-email-input {
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        border: 1px solid var(--gray-300);
+        caret-color: transparent;
+        @media (hover: hover) {
+          &:hover {
+            box-shadow: 0px 0px 1px 0px;
+          }
+        }
+        &:focus {
+          outline-color: var(--red-700);
+        }
+        &::placeholder {
+          color: var(--gray-400);
+        }
+      }
+    }
+    .verify-email-resend-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0px;
+      font: 14px;
+      font-weight: 400;
+      color: var(--gray-600);
+      .resend-btn {
+        border: none;
+        background-color: transparent;
+        font-weight: 600;
+        color: var(--rose-700);
+        cursor: pointer;
+        &:hover {
+          color: var(--rose-400);
+        }
+      }
+    }
+  }
+}
