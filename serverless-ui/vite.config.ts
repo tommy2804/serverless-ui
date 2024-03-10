@@ -1,12 +1,10 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import mkcert from 'vite-plugin-mkcert';
-import compression from 'vite-plugin-compression';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import mkcert from "vite-plugin-mkcert";
+import compression from "vite-plugin-compression";
+const MASTER_CLOUDFRONT_URL = "https://d3hx4fc9ioxuzl.cloudfront.net/";
 
-
-const MASTER_CLOUDFRONT_URL = 'https://d3247d8peb8l7u.cloudfront.net/'
-
-const REWITE_ENDPOINTS = ['/auth', '/api', '/small', '/medium', '/organization-assets'];
+const REWITE_ENDPOINTS = ["/auth", "/api", "/small", "/medium", "/organization-assets"];
 
 const proxy = REWITE_ENDPOINTS.reduce((acc: any, endpoint: string) => {
   acc[endpoint] = MASTER_CLOUDFRONT_URL;
