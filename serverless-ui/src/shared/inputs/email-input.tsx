@@ -30,7 +30,7 @@ const EmailInput = ({
                 );
               if (value.length === 0 && !shouldValidate) return true;
               if (isEmail) return true;
-              return t("email-validation");
+              return "email-validation";
             },
           },
         })}

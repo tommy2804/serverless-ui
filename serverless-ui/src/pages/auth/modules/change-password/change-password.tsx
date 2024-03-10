@@ -2,13 +2,12 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { Button, CircularProgress } from "@mui/material";
-import { forceChangePassword, resetPassword } from "../../../../api/auth-api";
+import { forceChangePassword, resetPassword } from "../../../../api/auth";
 import ImageContainer from "../../components/image-container/image-container";
 import lockIcon from "/images/lock-icon.svg";
 import BackToLogin from "../../components/back-to-login/back-to-login";
 import PasswordInput from "../../../../shared/inputs/password-input";
-import { useIzmeToasterContext } from "../../../../utils/context/izme-toaster-context";
-import LanguageToggle from "../../components/language-toggle/language-toggle";
+import { useToasterContext } from "../../../../state/toaster-context";
 import { CredentialsContext } from "../../context/use-credentials-context";
 import useOnSignIn from "../sign-in/use-on-sign-in";
 import "./change-password.scss";
@@ -28,13 +27,13 @@ const ChangePassword = () => {
   const username = new URLSearchParams(location.search).get("username") || "";
   const navigate = useNavigate();
   const { onSignIn } = useOnSignIn();
-  const { setToasterProps } = useIzmeToasterContext();
+  const { setToasterProps } = useToasterContext();
 
   const handleFormSubmit = async (data: any) => {
     if (data.newPassword !== data.confirmPassword) {
       return setToasterProps({
         type: "error",
-        text: t("password-not-match"),
+        text: "Passwords do not match",
       });
     }
     try {
@@ -54,7 +53,7 @@ const ChangePassword = () => {
       setIsLoading(false);
       setToasterProps({
         type: "error",
-        text: t("general-error"),
+        text: "An error occurred. Please try again later.",
       });
       navigate({
         pathname: "/verify-email",
@@ -80,13 +79,13 @@ const ChangePassword = () => {
               </span>
             </div>
             <div className='change-password-title-wrapper'>
-              <h1>{t("change-password-title")}</h1>
-              <h3>{t("change-password-sub-title")}</h3>
+              <h1>Change Password</h1>
+              <h3>Please enter a new password</h3>
             </div>
           </div>
           <form className='change-password-form' onSubmit={handleSubmit(handleFormSubmit)}>
             <PasswordInput
-              placeholder={t("new-password-placeholder")}
+              placeholder='Enter your new password'
               registerTag='newPassword'
               register={register}
               errors={errors}
@@ -95,10 +94,10 @@ const ChangePassword = () => {
             />
             <PasswordInput
               register={register}
-              placeholder={t("confirm-password-placeholder")}
+              placeholder='Confirm your new password'
               registerTag='confirmPassword'
               errors={errors}
-              label={t("confirm-password")}
+              label='Confirm Password'
               shouldValidate={true}
               watch={watch}
             />
@@ -120,13 +119,12 @@ const ChangePassword = () => {
                   />
                 </div>
               ) : (
-                t("reset-password")
+                "Reset Password"
               )}
             </Button>
           </form>
           <BackToLogin />
         </div>
-        <LanguageToggle />
       </div>
     </ImageContainer>
   );

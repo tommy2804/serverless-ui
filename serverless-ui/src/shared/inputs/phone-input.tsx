@@ -29,7 +29,7 @@ const PhoneInput = ({
               const isCell = /^[0-9]{10}$/.test(value.toString());
               if (!value && value !== 0) return true;
               if (isCell) return true;
-              return t("phone-validation");
+              return "phone-validation";
             },
           },
         })}
