@@ -1,25 +1,22 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Navigate,
-  Routes,
-} from "react-router-dom";
-import Auth from "./pages/auth/auth";
+import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import "./App.scss";
+import useGlobalMuiTheme from "./shared/styles/useGlobalMuiTheme";
+import { useLoginStateContext } from "./state/login-context";
+import Routers from "./utils/routers";
 
 function App() {
-  const currentToken = localStorage.getItem("userToken");
+  // const currentToken = localStorage.getItem("userToken");
 
-  const AuthWrapper = () => {
-    return currentToken ? <Navigate to="/" replace /> : <Auth />;
-  };
+  const theme = useGlobalMuiTheme();
+  const { authState } = useLoginStateContext();
 
   return (
-    <Router>
-      <Routes>
-        {/* <Route path="/" element={<HomeWrapper />} /> */}
-        <Route path="/auth" element={<AuthWrapper />} />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routers authState={authState} />
+      </Router>
+    </ThemeProvider>
   );
 }
 

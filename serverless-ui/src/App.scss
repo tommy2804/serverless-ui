@@ -1,0 +1,36 @@
+body {
+  background-color: #f8fafc !important;
+  @media (max-width: 600px) {
+    touch-action: pan-y;
+  }
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  input {
+    font-size: 16px;
+  }
+}
+
+.app-routers-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  @media (max-width: 960px) {
+    flex-direction: column;
+  }
+  .app-routers-main {
+    margin-inline-start: 250px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 2rem 2rem 2rem;
+    height: 100vh;
+    height: 100dvh;
+    @media (max-width: 960px) {
+      margin-inline-start: 0;
+      margin: 0;
+      padding: 0 1rem 1rem 1rem;
+    }
+  }
+}

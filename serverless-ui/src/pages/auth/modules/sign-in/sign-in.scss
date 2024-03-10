@@ -1,0 +1,133 @@
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sign-in-details-wrapper {
+  @extend .flex-center;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+  min-width: 345px;
+  .background-image {
+  }
+  .sign-in-title-wrapper {
+    @extend .flex-center;
+    flex-direction: column;
+    gap: 1.8rem;
+    min-width: 345px;
+    max-width: 380px;
+    .welcome-header {
+      @extend .flex-center;
+      flex-direction: column;
+      gap: 1.5rem;
+      .welcome-logo {
+        @extend .flex-center;
+      }
+      .welcome-title-wrapper {
+        @extend .flex-center;
+        flex-direction: column;
+        gap: 2px;
+        h1 {
+          margin: 0;
+        }
+        h3 {
+          margin: 0.8rem;
+          font-size: 16px;
+          font-weight: 400;
+          color: var(--gray-500);
+        }
+      }
+    }
+    .sign-in-credentials-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1.5rem;
+      width: 99%;
+      .credentials-options-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        .credentials-remember-wrapper {
+          @extend .flex-center;
+          gap: 8px;
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+      .credentials-buttons-wrapper {
+        @extend .flex-center;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+        .credentials-button {
+          height: 45px;
+          width: 100%;
+          font-size: 16px;
+          font-weight: 600;
+          border-radius: 8px;
+        }
+        .credentials-google-auth-button {
+          @extend .flex-center;
+          gap: 12px;
+          width: 100%;
+          border: 1px solid var(--gray-300);
+          color: var(--black-color);
+          background-color: transparent;
+          box-shadow: 0 0 3px 0 var(--gray-300);
+          border-radius: 8px;
+          img {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+    .sign-in-sign-up-link {
+      @extend .flex-center;
+      gap: 8px;
+    }
+  }
+}
+
+.sign-in-text-button {
+  color: var(--rose-700);
+  border: none;
+  text-decoration: none;
+  font-weight: 600;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.locked-account-err {
+  @extend .flex-center;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--warning-300);
+  border-radius: 12px;
+  background-color: var(--warning-25);
+  font-size: 14px;
+  color: var(--warning-700);
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+
+  .locked-account-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    font-weight: 600;
+  }
+  .locked-account-sub-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    font-weight: 400;
+  }
+}

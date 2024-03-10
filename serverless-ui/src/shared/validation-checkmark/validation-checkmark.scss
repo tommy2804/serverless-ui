@@ -1,0 +1,36 @@
+.validation-checkmark-wrapper {
+  display: flex;
+  .validation-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    .checkmark-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 20px;
+      min-height: 20px;
+      .checkmark-icon {
+        width: 100%;
+        direction: ltr;
+        display: flex;
+        align-items: center;
+        width: 9px;
+        height: 9px;
+        margin-right: 4px;
+      }
+    }
+    .green-validation {
+      color: white;
+      background-color: var(--success-600);
+      border-radius: 50%;
+    }
+    .gray-validation {
+      color: white;
+      background-color: var(--gray-300);
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,0 +1,99 @@
+.general-input-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  gap: 4px;
+  .password-visibility-wrapper {
+    cursor: pointer;
+    position: absolute;
+    right: 4%;
+    top: 2.2rem;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .password-icon-rtl {
+    right: unset;
+    left: 4%;
+  }
+}
+
+.username-input-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// to remove arrows on input
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.general-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px 0.5px var(--red-700);
+  }
+}
+
+.username-exist {
+  border: 1px solid var(--success-600);
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px 0.5px var(--success-600);
+  }
+}
+
+.username-not-exist {
+  border: 1px solid var(--error-500);
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 2px 0.5px var(--error-500);
+  }
+}
+
+.validation-error {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+  font-size: 14px;
+  width: 100%;
+  color: var(--error-500);
+  .info-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.password-validation-group {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex-direction: column;
+}

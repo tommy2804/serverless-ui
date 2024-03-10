@@ -12,7 +12,7 @@ export const getCurrentGitBranch = (): string => {
     const prId = process.env.PR_ID;
     if (currentBranch.toLowerCase() === 'head' && prId) return formatName(`Pr${prId}`);
     return formatName(currentBranch);
-  } catch (errr) {
+  } catch (err) {
     return 'Master';
   }
 };

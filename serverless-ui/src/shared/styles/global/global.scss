@@ -1,0 +1,157 @@
+.flex {
+  display: flex;
+}
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 0.5rem;
+}
+.pale-pink-button {
+  color: var(--rose-700) !important;
+  background-color: var(--rose-100) !important;
+  border: 1px solid var(--rose-200) !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--rose-200) !important;
+  }
+  @media (max-width: 960px) {
+    width: 100%;
+    max-width: 270px;
+  }
+}
+.secondary-button {
+  color: var(--gray-700);
+  border-radius: 8px !important;
+  gap: 6px;
+  &:hover {
+    background-color: var(--gray-300) !important;
+    opacity: 0.9;
+  }
+}
+.svg-rotate {
+  svg {
+    transform: scale(-1, 1);
+  }
+}
+.svg-right {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 6px;
+  .MuiButton-startIcon {
+    margin: 0;
+  }
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+  padding: 0 !important; // overide default
+  padding: 4px 10px !important;
+}
+.width100 {
+  width: 100%;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.error-message {
+  color: var(--error-500);
+  font-size: 0.8rem;
+  width: 100%;
+  text-align: start;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-left-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.flex-right-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-left-column {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.flex-right-column {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+.mobile-flex-column {
+  display: flex;
+  @media (max-width: 840px) {
+    flex-direction: column;
+  }
+}
+.mobile-flex-row {
+  @media (max-width: 840px) {
+    flex-direction: row;
+  }
+}
+.gap1rem {
+  gap: 1rem;
+}
+.no-wrap {
+  white-space: nowrap;
+}
+.max-width100 {
+  max-width: 100px;
+}
+.max-width150 {
+  max-width: 150px;
+}
+.small-space {
+  display: flex;
+  gap: 6px;
+}
+.space {
+  display: flex;
+  gap: 10px;
+}
+.border-radius6 {
+  border-radius: 6px !important;
+}
+.bold600 {
+  font-weight: 600 !important;
+}
+.button-padding {
+  padding: 10px 12px !important;
+}
+.loading-wrapper {
+  width: 100%;
+  @extend .flex-center;
+}
+.none {
+  display: none;
+}
+.prevent-click {
+  pointer-events: none;
+}
+.no-underline {
+  text-decoration: none;
+  color: inherit;
+}
