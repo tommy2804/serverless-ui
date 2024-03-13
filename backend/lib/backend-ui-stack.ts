@@ -15,10 +15,6 @@ import {
   Distribution,
   OriginProtocolPolicy,
   CacheQueryStringBehavior,
-  CloudFrontWebDistribution,
-  CloudFrontAllowedCachedMethods,
-  CloudFrontAllowedMethods,
-  PriceClass,
   OriginAccessIdentity,
 } from "aws-cdk-lib/aws-cloudfront";
 import {
@@ -42,6 +38,9 @@ import * as origin from "aws-cdk-lib/aws-cloudfront-origins";
 import { staticFilesSuffix } from "../utils/constants";
 import { getCurrentGitBranch } from "../utils/git-util";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
+// import { getDomainByEnv, getEnv } from "../utils/env-utils";
+import { CnameRecord, HostedZone } from "aws-cdk-lib/aws-route53";
+import { Certificate, DnsValidatedCertificate } from "aws-cdk-lib/aws-certificatemanager";
 
 export class BackendStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -71,10 +70,10 @@ export class BackendStack extends Stack {
     };
 
     const s3Bucket = new Bucket(this, "S3Bucket", {
+      websiteIndexDocument: "index.html",
+      autoDeleteObjects: true,
       blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
       removalPolicy: RemovalPolicy.DESTROY,
-      accessControl: BucketAccessControl.PRIVATE,
-      cors: [s3CorsRule],
     });
 
     const bucket = new Bucket(this, "UiStaticAssets", {
@@ -161,9 +160,8 @@ export class BackendStack extends Stack {
     const [s3OrganizationsAssetsOrigin, s3OrganizationsAssetsPath] =
       fixS3OrganizationsAssetsUrl.split("/");
 
-    const cloudfrontSDK = new AWS.CloudFront({
-      region: "us-east-1",
-    });
+    const cloudfrontSDK = new AWS.CloudFront();
+
     const [cachePoliciesResponse, originRequestPoliciesResponse, responseHeadersPolicyResponse] =
       await Promise.all([
         cloudfrontSDK.listCachePolicies().promise(),
@@ -182,12 +180,12 @@ export class BackendStack extends Stack {
     const existDefaultResponseHeadersPolicy = existResponseHeadersPoliciesList?.find(
       (policy) =>
         policy?.ResponseHeadersPolicy?.ResponseHeadersPolicyConfig?.Name ===
-        "ProjectDefaultResponseHeadersPolicy"
+        "CustomersDefaultResponseHeadersPolicy"
     );
     const existExtendedResponseHeadersPolicy = existResponseHeadersPoliciesList?.find(
       (policy) =>
         policy?.ResponseHeadersPolicy?.ResponseHeadersPolicyConfig?.Name ===
-        "ProjectExtendedResponseHeadersPolicy"
+        "CustomersExtendedResponseHeadersPolicy"
     );
 
     const getExistCachePolicy = (cachePolicy: any) =>
@@ -247,6 +245,7 @@ export class BackendStack extends Stack {
       `AllViewerExceptHostHeader`,
       "b689b0a8-53d0-40ab-baf2-68738e2966ac"
     );
+
     const securityHeadersBehavior = {
       strictTransportSecurity: {
         accessControlMaxAge: Duration.seconds(31536000),
@@ -282,8 +281,8 @@ export class BackendStack extends Stack {
         })
       : getResponseHeadersPolicy(existDefaultResponseHeadersPolicy);
     const ExtendedResponseHeadersPolicy = isMaster
-      ? new ResponseHeadersPolicy(this, "ProjectExtendedResponseHeadersPolicy", {
-          responseHeadersPolicyName: "ProjectExtendedResponseHeadersPolicy",
+      ? new ResponseHeadersPolicy(this, "CustomersExtendedResponseHeadersPolicy", {
+          responseHeadersPolicyName: "CustomersExtendedResponseHeadersPolicy",
           securityHeadersBehavior,
           customHeadersBehavior: {
             customHeaders: [
@@ -296,7 +295,7 @@ export class BackendStack extends Stack {
           },
         })
       : getResponseHeadersPolicy(existExtendedResponseHeadersPolicy);
-    //
+
     const additionalBehaviorconfigs = (endpoint: string): BehaviorOptions => ({
       allowedMethods: AllowedMethods.ALLOW_ALL,
       origin: new origin.HttpOrigin(endpoint, {
@@ -360,6 +359,30 @@ export class BackendStack extends Stack {
       ),
       ...ststicAssetsBehavior,
     };
+
+    // const env = getEnv();
+    // const domain = getDomainByEnv(env);
+
+    const domainName = "tommycreative.com";
+    const siteDomain = "www" + "." + domainName;
+
+    const hosetdZone = HostedZone.fromLookup(this, "TommyHostedZone", { domainName: domainName });
+
+    if (!hosetdZone)
+      throw new Error(
+        `Hosted zone for tommy not found in env tommy and deploy env ${process.env.DEPLOY_ENV}`
+      );
+
+    const certificate = new Certificate(this, "TommyCertificate", {
+      domainName: domainName,
+      subjectAlternativeNames: ["*." + domainName],
+    });
+    certificate.applyRemovalPolicy(RemovalPolicy.DESTROY);
+
+    const resolveCertificate = (id: string) =>
+      `arn:aws:acm:${stack.region}:${stack.account}:certificate/${id}`;
+
+    // const recordName = isMaster ? `manage.${d}` : `${fixedBranch}-manage.${domain}`;
 
     const oai = new OriginAccessIdentity(this, "OAI");
     s3Bucket.grantReadWrite(oai);
@@ -459,48 +482,38 @@ export class BackendStack extends Stack {
     //   defaultRootObject: "index.html",
     // });
 
-    const cloudFrontDistribution = new CloudFrontWebDistribution(this, "MyCloudFrontDistribution", {
-      originConfigs: [
+    const cloudFrontDistribution = new Distribution(this, "CustomersDistribution", {
+      certificate: certificate,
+      domainNames: [siteDomain, domainName],
+      defaultBehavior: {
+        origin: new origin.S3Origin(s3Bucket),
+        viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        cachePolicy: cachePolicyService,
+        originRequestPolicy:
+          s3OriginRequestPolicyExist ||
+          new OriginRequestPolicy(this, "RequestPolicy", {
+            cookieBehavior: CacheCookieBehavior.all(),
+            originRequestPolicyName: "S3DeafaultOriginRequestPolicy",
+          }),
+        responseHeadersPolicy: ExtendedResponseHeadersPolicy,
+      },
+      errorResponses: [
         {
-          s3OriginSource: {
-            s3BucketSource: s3Bucket,
-            originAccessIdentity: oai,
-          },
-
-          behaviors: [
-            ExtendedResponseHeadersPolicy,
-            // Default behavior
-            {
-              viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-              allowedMethods: CloudFrontAllowedMethods.ALL, // Example, adjust as needed
-              cachedMethods: CloudFrontAllowedCachedMethods.GET_HEAD, // Example, adjust as needed
-              compress: true,
-              isDefaultBehavior: true,
-            },
-            // Additional behaviors
-            ...Object.entries(additionalBehaviors).map(([pathPattern, behavior]) => ({
-              pathPattern,
-              ...behavior,
-              allowedMethods: CloudFrontAllowedMethods.ALL, // Example, adjust as needed
-              cachedMethods: CloudFrontAllowedCachedMethods.GET_HEAD, // Example, adjust as needed
-            })),
-          ],
-          // Additional configuration for the origin
-        },
-      ],
-
-      viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-      errorConfigurations: [
-        {
-          errorCode: 402,
-          responseCode: 200,
+          httpStatus: 404,
           responsePagePath: "/index.html",
+          responseHttpStatus: 200,
         },
       ],
-      // Other configuration options
+      additionalBehaviors,
+      defaultRootObject: "index.html",
     });
 
     // Other configuration options
+
+    new CnameRecord(this, "TommyUiCname", {
+      zone: hosetdZone,
+      domainName: cloudFrontDistribution.distributionDomainName,
+    });
 
     new CfnOutput(this, "CloudFrontWebDomain", {
       value: cloudFrontDistribution.distributionDomainName,
