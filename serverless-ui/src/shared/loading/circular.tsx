@@ -11,7 +11,7 @@ export default function CircularLoading() {
         top: "40%",
         width: "120px !important",
         height: "120px !important",
-        marginInlineStart: "250px",
+        marginInlineStart: "50%",
         "@media (max-width: 960px)": {
           marginInlineStart: "0",
         },

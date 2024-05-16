@@ -1,0 +1,111 @@
+.header {
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-shadow: none;
+  margin: auto;
+  padding: 0 5vw;
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  & .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.5rem;
+    max-width: var(--section-max-width);
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex: 1;
+    }
+  }
+}
+
+.navbar_links_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+  & .nav-link {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    color: inherit;
+    flex-grow: unset;
+    margin: 0 0.5rem;
+    &.active {
+      color: var(--rose-700);
+      background-color: var(--rose-50);
+    }
+    &:hover {
+      background-color: var(--rose-50);
+      color: var(--rose-700);
+    }
+  }
+}
+
+.navbar_buttons_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  & .nav-button {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    color: inherit;
+    flex-grow: unset;
+    &.black-button {
+      color: var(--gray-900);
+    }
+    &.main-button {
+      color: var(--white-color);
+    }
+    &:hover {
+      background-color: var(--rose-50);
+      color: var(--rose-700);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .header {
+    height: 4.5rem;
+    padding: 0 1rem;
+    & .navbar-container {
+      gap: 0;
+      max-width: 100%;
+      & .navbar {
+        display: none;
+      }
+    }
+  }
+  .mobile-menu {
+    & .navbar_links_container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 0.75rem;
+      & .nav-link {
+        width: 100%;
+        margin: 0;
+        justify-content: flex-start;
+      }
+    }
+    & .navbar_buttons_container {
+      flex-direction: column;
+      width: 100%;
+      & .nav-button {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  }
+}

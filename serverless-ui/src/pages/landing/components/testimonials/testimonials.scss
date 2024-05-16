@@ -1,0 +1,118 @@
+#testimonials {
+  display: flex;
+  background: var(--white-color);
+  padding: 4rem 5vw 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+
+  & .testimonials-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0 auto;
+    & .section-description {
+      margin-top: 0.5rem;
+    }
+  }
+
+  & .testimonials-container {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+    max-width: var(--section-max-width);
+    justify-content: space-evenly;
+    align-items: center;
+    width: 90%;
+  }
+
+  .video-testimonial-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    & .testimonial-video {
+      width: 100%;
+      height: 100%;
+      max-height: 37.5rem;
+      object-fit: cover;
+    }
+
+    & .testimonial-video-caption {
+      position: absolute;
+      bottom: 0;
+      color: var(--white-color);
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      overflow: hidden;
+      max-height: 37.5rem;
+      transition: max-height 0.5s ease-in-out;
+      gap: 0;
+      background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+
+      &.hidden {
+        max-height: 0;
+      }
+      & blockquote {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 400;
+        line-height: 1.5rem;
+        text-align: start;
+        padding: 2.5rem 1.5rem 2.5rem 0.5rem;
+      }
+      & .play-button {
+        background: none;
+        display: flex;
+        cursor: pointer;
+        border: none;
+        margin-inline-end: 1.5rem;
+        padding: 0;
+
+        & .MuiSvgIcon-root {
+          color: var(--white-color);
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  #testimonials {
+    padding: 4rem 5vw 0;
+    gap: 2rem;
+    & .testimonials-title-container {
+      width: 100%;
+    }
+    & .testimonials-container {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .video-testimonial-container {
+      & .testimonial-video {
+        max-height: 35rem;
+      }
+      & .testimonial-video-caption {
+        & blockquote {
+          font-size: 1rem;
+          padding: 2rem 0.5rem 2rem 1rem;
+        }
+        & .play-button {
+          margin-inline-end: 0.5rem;
+        }
+      }
+    }
+  }
+}

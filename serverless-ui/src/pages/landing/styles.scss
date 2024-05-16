@@ -1,0 +1,61 @@
+html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.logo-placeholder {
+  width: 4.8125rem;
+  height: 2rem;
+}
+
+.section-title {
+  color: var(--rose-700);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  text-align: center;
+  margin: 0;
+}
+
+.section-subtitle {
+  display: block;
+  color: var(--gray-900);
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 2.75rem;
+  letter-spacing: -0.045rem;
+  text-align: center;
+  margin: 0;
+}
+
+.section-description {
+  color: var(--gray-700);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+@media (max-width: 1020px) {
+  .section-title {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.875rem;
+    line-height: 2.375rem;
+  }
+
+  .section-description {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}

@@ -4,7 +4,7 @@ const apiId = "s4g9m9o94d";
 //s4g9m9o94d.execute-api.eu-central-1.amazonaws.com/prod/
 
 const XSRF_TOKEN = "XSRF-TOKEN";
-const REFRESH_TOKEN_ENDPOINT = "/auth/refreshToken";
+const REFRESH_TOKEN_ENDPOINT = "/api/auth/refreshToken";
 const SIGN_IN_PATH = "/sign-in";
 
 const getCookieByName = (name: string): string | undefined => {

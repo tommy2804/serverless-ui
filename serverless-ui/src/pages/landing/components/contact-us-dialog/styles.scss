@@ -1,0 +1,195 @@
+.dialog-contact-us-container {
+  display: flex;
+  flex-direction: row;
+  width: 50vw;
+  overflow: hidden;
+  @media (max-width: 1250px) {
+    width: 80vw;
+  }
+  @media (max-width: 650px) {
+    width: 90vw;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .contact-us-form-container {
+    width: 60%;
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    @media (max-width: 650px) {
+      width: unset;
+      padding: 1rem;
+    }
+    .flex-between-input {
+      display: flex;
+      align-items: center;
+      width: 80%;
+      justify-content: space-between;
+      @media (max-width: 650px) {
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+      }
+      .contact-us-input {
+        width: 48%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        @media (max-width: 650px) {
+          width: 100%;
+          margin-block-start: 0.7rem;
+        }
+      }
+    }
+    .full-width-input {
+      margin-block-start: 1rem;
+      width: 80%;
+      @media (max-width: 650px) {
+        width: 100%;
+      }
+      .MuiTelInput-TextField {
+        width: 100%;
+      }
+    }
+    .contact-us-action {
+      margin-block-start: 1rem;
+      width: 80%;
+      .width100 {
+        width: 100%;
+      }
+      @media (max-width: 650px) {
+        width: 90%;
+      }
+    }
+  }
+
+  .get-in-touch-container {
+    width: 40%;
+    background-color: #610023;
+    padding: 1.5rem 1rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @media (max-width: 650px) {
+      width: 90%;
+      background-color: inherit;
+      display: flex;
+      align-self: center;
+      padding: 1.5rem 1rem 0 1rem;
+    }
+    .contact-us-title {
+      font-weight: 600;
+      color: var(--white-color);
+      font-size: 1.5rem;
+      @media (max-width: 650px) {
+        width: 90%;
+        color: var(--gray-900);
+      }
+    }
+    .contact-us-sub-title {
+      font-weight: 400;
+      color: #fecdd6;
+      font-size: 0.9rem;
+      margin-block-start: 0.4rem;
+      @media (max-width: 650px) {
+        width: 100%;
+        color: var(--gray-600);
+      }
+    }
+    .contact-us-chat-with {
+      margin-block-start: 1rem;
+      display: flex;
+      align-items: center;
+      @media (max-width: 650px) {
+        display: none;
+      }
+      .chat-with-content {
+        margin-inline-start: 1rem;
+        font-weight: 600;
+        color: var(--white-color);
+        font-size: 1.2rem;
+      }
+    }
+    .here-to-help {
+      margin-block-start: 0.4rem;
+      font-weight: 400;
+      color: #fecdd6;
+      font-size: 0.9rem;
+      @media (max-width: 650px) {
+        color: var(--gray-600);
+      }
+    }
+    .contact-via-email {
+      margin-block-start: 0.4rem;
+      font-weight: 600;
+      color: var(--white-color);
+      font-size: 0.8rem;
+      cursor: pointer;
+      @media (max-width: 650px) {
+        color: var(--rose-600);
+      }
+    }
+    .contact-us-icons-group {
+      margin-block-end: 1rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      @media (max-width: 650px) {
+        display: none;
+      }
+      a {
+        margin-inline-end: 1rem;
+        color: var(--white-color);
+        cursor: pointer;
+        width: 1.3rem;
+      }
+    }
+  }
+
+  .dialog-close-icon {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    cursor: pointer;
+  }
+  .dialog-close-icon-rtl {
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    cursor: pointer;
+  }
+}
+.contact-success-container {
+  width: 60vw;
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 25rem;
+
+  @media (max-width: 650px) {
+    width: 90vw;
+    padding: 2rem 0;
+  }
+  .contact-success-title {
+    color: var(--gray-900);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .contact-success-subtitle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .contact-success-subtitle {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      font-weight: 400;
+      text-align: center;
+    }
+  }
+}

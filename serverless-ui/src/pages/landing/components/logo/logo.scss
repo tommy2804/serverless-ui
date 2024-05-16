@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Swash:wght@700&display=swap');
+
+.logo {
+  font-family: 'Cherry Swash', serif;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 130%;
+  font-size: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  color: var(--gray-900);
+  & .logo_image {
+    width: 2rem;
+    height: 2rem;
+  }
+  body[dir='rtl'] & {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+}
