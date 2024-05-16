@@ -1,17 +1,17 @@
 import axios from "axios";
 
+const apiId = "s4g9m9o94d";
+//s4g9m9o94d.execute-api.eu-central-1.amazonaws.com/prod/
 
-const apiId = '4ilfli2w14'
-export const baseURL = `https://${apiId}.execute-api.eu-central-1.amazonaws.com/prod/`;
-
-const XSRF_TOKEN = 'XSRF-TOKEN';
-const REFRESH_TOKEN_ENDPOINT = '/auth/refreshToken';
-const SIGN_IN_PATH = '/sign-in';
+const XSRF_TOKEN = "XSRF-TOKEN";
+const REFRESH_TOKEN_ENDPOINT = "/auth/refreshToken";
+const SIGN_IN_PATH = "/sign-in";
 
 const getCookieByName = (name: string): string | undefined => {
-  const cookies = document.cookie.split(';');
+  const cookies = document.cookie.split(";");
+
   const fullCookie: string | undefined = cookies.find((cookie) =>
-    cookie.trim().startsWith(`${name}=`),
+    cookie.trim().startsWith(`${name}=`)
   );
   return fullCookie?.trim()?.substring(name.length + 1, fullCookie.length);
 };
@@ -19,17 +19,17 @@ const getCookieByName = (name: string): string | undefined => {
 const getCsrfHeader = (): string | undefined => getCookieByName(XSRF_TOKEN);
 
 const api = axios.create({
-  baseURL,
+  baseURL: "/",
 });
 
 api.interceptors.request.use(
   (config) => {
-    if (config.url?.startsWith('/api') || config.url?.startsWith('/auth')) {
+    if (["api", "auth"].some((endpoint) => config.url?.startsWith(`/${endpoint}`))) {
       config.headers[XSRF_TOKEN] = getCsrfHeader();
     }
     return config;
   },
-  () => console.log('Error in request interceptor'),
+  () => console.log("Error in request interceptor")
 );
 
 api.interceptors.response.use(
@@ -38,7 +38,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     if (
       error.response.status === 401 &&
-      error.response.data.message.includes('token has expired')
+      error.response.data.message.includes("token has expired")
     ) {
       return api
         .get(REFRESH_TOKEN_ENDPOINT)
@@ -52,7 +52,7 @@ api.interceptors.response.use(
     }
     if (
       error.response.status === 503 &&
-      error.response?.data.includes('CloudFront distribution was throttled')
+      error.response?.data.includes("CloudFront distribution was throttled")
     ) {
       // sleep for 3 second and try again
       return new Promise((resolve) => {
@@ -60,9 +60,7 @@ api.interceptors.response.use(
       });
     }
     return Promise.reject(error);
-  },
+  }
 );
-
-
 
 export default api;

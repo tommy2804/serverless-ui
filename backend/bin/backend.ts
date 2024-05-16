@@ -7,12 +7,12 @@ import { getCurrentGitBranch } from "../utils/git-util";
 const app = new App();
 const BackendStackUi = new BackendStack(
   app,
-  `${userInfo().username}${getCurrentGitBranch()}BackendStack`,
+  `${userInfo().username}${getCurrentGitBranch()}UiBackendStack`,
   {
     env: {
       region: "us-east-1",
     },
-  },
+  }
 );
 
 BackendStackUi.init();

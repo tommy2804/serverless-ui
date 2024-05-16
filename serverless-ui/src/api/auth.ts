@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import api from "../utils/api";
 
-const BASE_URL = "/auth";
+const BASE_URL = "/api/auth";
 
 export const signUp = async (username: string, email: string, password: string): Promise<any> =>
   api.post(`${BASE_URL}/signUp`, {

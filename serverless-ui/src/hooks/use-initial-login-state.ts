@@ -9,14 +9,9 @@ const useInitialLoginState = () => {
   const [userPayload, setUserPayload] = useState<any>(null);
   const [organizationPayload, setOrganizationPayload] = useState<any>(null);
   const getLoginState = async () => {
-    const res = await isLoggedIn().catch(
-      () => (
-        console.log("first"),
-        {
-          data: { isLoggedIn: false },
-        }
-      )
-    );
+    const res = await isLoggedIn().catch(() => ({
+      data: { isLoggedIn: false },
+    }));
     setAuthState(res.data.isLoggedIn ? AUTH_STATE.AUTH : AUTH_STATE.NOT_AUTH);
     if (res.data.isLoggedIn) {
       const { payload } = res.data;

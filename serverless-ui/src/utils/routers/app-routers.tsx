@@ -14,19 +14,6 @@ import { lazy } from "react";
 // const Transactions = lazy(() => import('../pages/transactions/transactions'));
 // const Settings = lazy(() => import('../pages/settings'));
 
-// const MiddleComp = () => {
-//   const { nameUrl } = useParams();
-//   const location = useLocation();
-//   const continueUpload = new URLSearchParams(location.search).get('continueUpload');
-//   const editEvent = new URLSearchParams(location.search).get('editEvent');
-//   if (continueUpload)
-//     return <Navigate to={`/events/${nameUrl}/images?continueUpload=${continueUpload}`} />;
-//   if (editEvent) {
-//     return <Navigate to={`/events/${nameUrl}/overview?editEvent=${editEvent}`} />;
-//   }
-//   return <Navigate to={`/events/${nameUrl}/overview`} />;
-// };
-
 interface AppRoutersProps {
   prevUrl?: string;
 }
