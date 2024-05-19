@@ -6,9 +6,7 @@ import { useLandingPageContext } from "./context/landing-page-context";
 import Hero from "./components/hero";
 import HowItWorks from "./components/how-it-works";
 import EventsTypes from "./components/events-types";
-
 import Faq from "./components/faq";
-import Footer from "./components/footer";
 import { ContactUsProvider } from "./context/contact-us-context";
 import ContactUsDialog from "./components/contact-us-dialog";
 import Testimonials from "./components/testimonials/testimonials";
@@ -22,9 +20,9 @@ const LandingPage = () => {
     heroSection: { ref: useRef(null), id: "hero-section" },
     testimonials: {
       ref: useRef(null),
-      id: "testimonials",
-      text: t("testimonials"),
-      url: "#testimonials",
+      id: "Chats",
+      text: t("Chats"),
+      url: "/chats",
     },
     howItWorks: {
       ref: useRef(null),

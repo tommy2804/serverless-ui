@@ -8,12 +8,13 @@ import { scrollToSection } from "../../utils/helpers";
 import Logo from "../logo";
 import "./navbar.scss";
 import "../../../../shared/styles/buttons/Buttons-basic.scss";
+import { useNavigate } from "react-router-dom";
 
 interface Section {
   ref: React.MutableRefObject<null>;
   id: string;
+  url: string;
   text?: string;
-  url?: string;
 }
 
 interface NavbarProps {
@@ -24,6 +25,7 @@ const Navbar = ({ navItems }: NavbarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isWindowScrolled, setIsWindowScrolled] = useState(false);
   const { isNonMobile, activeSection } = useLandingPageContext();
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const direction = i18n.dir();
   const drawerWidth = 240;
@@ -70,10 +72,10 @@ const Navbar = ({ navItems }: NavbarProps) => {
       {navItems.slice(1).map((item) => (
         <Button
           key={item.url?.replace("#", "")}
-          href={item.url}
           className={`nav-link ${activeSection === item.id ? "active" : ""}`}
           onClick={(e) => {
             handleNavItemClick(e, item);
+            navigate(item.url);
           }}>
           {item.text}
         </Button>

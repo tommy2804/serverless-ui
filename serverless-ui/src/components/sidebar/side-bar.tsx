@@ -71,10 +71,9 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "16px",
-        }}
-      >
+        }}>
         <Box>
-          <List className="list" component="nav" aria-label="sidebar options">
+          <List className='list' component='nav' aria-label='sidebar options'>
             {navArrayTop.map((item, index) => (
               <GenericNavItem
                 key={index}
@@ -91,17 +90,13 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
 
           {/* Account option */}
 
-          <List
-            className="account-footer"
-            component="nav"
-            aria-label="account option"
-          >
+          <List className='account-footer' component='nav' aria-label='account option'>
             <ListItem style={{ padding: 0, width: 210, color: "white" }}>
-              <ListItemButton className="account">
+              <ListItemButton className='account'>
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
-                <ListItemText className="profile" secondary={user?.email} />
+                <ListItemText className='profile' secondary={user?.email} />
               </ListItemButton>
             </ListItem>
             <ListItem
@@ -114,10 +109,9 @@ const Sidebar: React.FC<SideBarProps> = ({ user }) => {
                 paddingLeft: 0,
 
                 top: 20,
-              }}
-            >
+              }}>
               <ListItemButton onClick={onSignOut}>
-                <ListItemIcon className="logOut">
+                <ListItemIcon className='logOut'>
                   <LogoutOutlined />
                 </ListItemIcon>
               </ListItemButton>

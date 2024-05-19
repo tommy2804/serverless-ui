@@ -8,7 +8,7 @@ import AppSuspense from "../../shared/suspense";
 
 const PageNotFound = lazy(() => import("../../pages/page-not-found"));
 const Landing = lazy(() => import("../../pages/landing"));
-// const UsersPage = lazy(() => import('../pages/users-page'));
+const ChatApp = lazy(() => import("../../pages/chat"));
 // const CurrentEvent = lazy(() => import('../pages/events-page/Event/current-event'));
 // const Packages = lazy(() => import('../pages/packages'));
 // const Transactions = lazy(() => import('../pages/transactions/transactions'));
@@ -38,14 +38,14 @@ const AppRouters = ({ prevUrl = "/" }: AppRoutersProps) => (
               </AppSuspense>
             }
           />
-          {/* <Route
-            path='/users'
+          <Route
+            path='/chats'
             element={
               <AppSuspense>
-                <UsersPage />
+                <ChatApp />
               </AppSuspense>
             }
-          /> */}
+          />
 
           {/* <Route
             path='/events/:nameUrl/:tab'
