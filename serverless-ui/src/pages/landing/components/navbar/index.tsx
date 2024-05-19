@@ -84,23 +84,13 @@ const Navbar = ({ navItems }: NavbarProps) => {
     <Box className='navbar'>
       {navbarLinksRenderer()}
       <List className='navbar_buttons_container'>
-        <Button
-          variant='text'
-          // href={`https://manage.izme.ai/sign-up?lang=${i18n.language}`}
-          className='nav-button black-button'>
+        <Button variant='text' className='nav-button black-button'>
           {t("photographers-login")}
         </Button>
-        <Button
-          variant='text'
-          // href={`https://manage.izme.ai?lang=${i18n.language}`}
-          className='nav-button'>
+        <Button variant='text' onClick={() => {}} className='nav-button'>
           {t("log-in")}
         </Button>
-        <Button
-          // href={`https://manage.izme.ai/sign-up?lang=${i18n.language}`}
-          className='main-button'>
-          {t("start-now")}
-        </Button>
+        <Button className='main-button'>{t("start-now")}</Button>
         <LanguageSelector />
       </List>
     </Box>
@@ -127,23 +117,13 @@ const Navbar = ({ navItems }: NavbarProps) => {
       <Logo />
       {navbarLinksRenderer()}
       <List className='navbar_buttons_container'>
-        <Button
-          variant='text'
-          // href={`https://manage.izme.ai/sign-up?lang=${i18n.language}`}
-          className='nav-button'>
+        <Button variant='text' className='nav-button'>
           {t("photographers-login")}
         </Button>
-        <Button
-          variant='text'
-          // href={`https://manage.izme.ai?lang=${i18n.language}`}
-          className='nav-button'>
+        <Button variant='text' className='nav-button'>
           {t("log-in")}
         </Button>
-        <Button
-          // href={`https://manage.izme.ai/sign-up?lang=${i18n.language}`}
-          className='nav-button main-button'>
-          {t("start-now")}
-        </Button>
+        <Button className='nav-button main-button'>{t("start-now")}</Button>
       </List>
       <LanguageSelector />
     </Drawer>
@@ -162,6 +142,8 @@ const Navbar = ({ navItems }: NavbarProps) => {
         }}>
         <Toolbar className='navbar-container' sx={{ padding: "0" }} dir={direction}>
           <Logo />
+
+          {desktopNavbarRenderer()}
           <IconButton
             color='inherit'
             aria-label='open drawer'
