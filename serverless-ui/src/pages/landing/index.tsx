@@ -17,7 +17,7 @@ const LandingPage = () => {
   const { setActiveSection, isNonMobile } = useLandingPageContext();
 
   const sections = {
-    heroSection: { ref: useRef(null), id: "hero-section" },
+    heroSection: { ref: useRef(null), id: "hero-section", url: "" },
     testimonials: {
       ref: useRef(null),
       id: "Chats",

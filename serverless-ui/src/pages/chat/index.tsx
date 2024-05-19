@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { ArchiveBox, CircleDashed, MagnifyingGlass, Users } from "phosphor-react";
 import { SimpleBarStyle } from "../../components/Scrollbar";
@@ -9,6 +9,8 @@ import { SearchIconWrapper, StyledInputBase, Search } from "./components/Search"
 import BottomNav from "../../components/layouts/BottomNav";
 import ChatElement from "./components/Chat/ChatElement";
 import Friends from "./components/Friends/Friends";
+import { useTranslation } from "react-i18next";
+import Navbar from "../landing/components/navbar";
 
 interface ConversationChat {
   img: string;
@@ -22,6 +24,7 @@ interface ConversationChat {
 
 const ChatApp = () => {
   const theme = useTheme();
+  const { t, i18n } = useTranslation();
   const isDesktop = useResponsive("up", "md");
   const [conversations, setConversations] = useState<ConversationChat[]>(
     Array.from({ length: 5 }, (_, idx) => {
@@ -38,6 +41,17 @@ const ChatApp = () => {
     })
   );
 
+  const sections = {
+    testimonials: {
+      ref: useRef(null),
+      id: "Chats",
+      text: t("Chats"),
+      url: "/chats",
+    },
+  };
+
+  const navItems = Object.values(sections);
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleCloseDialog = () => {
@@ -49,10 +63,11 @@ const ChatApp = () => {
 
   return (
     <>
+      <Navbar navItems={navItems} />
       <Box
         sx={{
           position: "relative",
-          height: "100%",
+          marginBlockStart: "7rem",
           width: isDesktop ? 320 : "100vw",
           backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background,
 
