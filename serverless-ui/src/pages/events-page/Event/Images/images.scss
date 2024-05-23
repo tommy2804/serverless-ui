@@ -1,0 +1,102 @@
+@import "../../../../shared/styles//global/global.scss";
+
+.loading-images-wrapper {
+  @extend .flex-center;
+  height: 100px;
+  position: relative;
+  span {
+    margin-inline-start: 0;
+  }
+}
+
+.images-tab-wrapper {
+  @extend .flex-center;
+  flex-direction: column;
+  padding-top: 20px;
+  gap: 24px;
+  .images-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    white-space: nowrap;
+    & > span {
+      font-size: 20px;
+      font-weight: 600;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      .missing-photos-alert {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: var(--error-400);
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.75em;
+        padding: 0;
+        transition: color 0.2s ease-in-out;
+        &:hover {
+          text-decoration: underline;
+          background: transparent;
+          color: var(--error-600);
+        }
+      }
+    }
+    & .buttons-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      & .select-images-button {
+        padding: 10px 16px;
+        color: var(--rose-700) !important;
+        background-color: var(--white-color) !important;
+        border: 1px solid var(--rose-700) !important;
+        border-radius: 8px !important;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        min-width: 90px;
+        @media (max-width: 640px) {
+          display: none;
+        }
+        &:hover {
+          background-color: var(--rose-600) !important;
+          color: var(--white-color) !important;
+        }
+      }
+      button {
+        padding: 10px 16px;
+      }
+    }
+    @media (max-width: 560px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+  .scroll-container {
+    width: 100%;
+  }
+  .images-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: max-content;
+    grid-auto-rows: max-content;
+    box-sizing: border-box;
+    gap: 8px;
+    width: 100%;
+    div {
+      width: 100%;
+    }
+
+    @media (max-width: 500px) {
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    }
+  }
+}

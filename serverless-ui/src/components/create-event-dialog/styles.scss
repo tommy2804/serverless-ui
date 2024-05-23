@@ -1,0 +1,478 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pad2 {
+  padding: 2rem 2rem 1.3rem;
+}
+
+.container-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  width: 40rem;
+}
+
+.form-container {
+  padding: 2rem 2rem 0;
+  width: 40rem;
+}
+
+.pad-2 {
+  padding: 0.6rem 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.text-non-mobile {
+  color: var(--gray-900);
+  font-weight: 900;
+  font-size: 0.75rem;
+  width: 20rem;
+}
+
+// input global
+.MuiInputBase-root {
+  color: #667085 !important;
+  border-radius: 7px !important;
+  height: 2rem;
+}
+
+.MuiOutlinedInput-root {
+  color: var(--gray-900);
+  font-weight: 900;
+  font-size: 0.75rem;
+
+  & .MuiOutlinedInput-notchedOutline {
+    border-color: #d0d5dd;
+    border-width: 1px;
+  }
+
+  &:hover {
+    & .MuiOutlinedInput-notchedOutline {
+      border-color: #d0d5dd !important;
+      border-width: 1.5px;
+    }
+  }
+}
+
+// drop-zone
+.dropzone {
+  border: 1px solid var(--gray-300);
+  border-radius: 7px;
+  height: 4rem;
+  width: 19rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.error-message ~ .dropzone-upload-container {
+  border: 1px solid var(--red-500);
+}
+
+.mark-text {
+  color: var(--rose-600);
+  font-weight: 900;
+}
+
+.text {
+  color: var(--gray-900);
+  font-weight: 500;
+  font-size: 0.7rem;
+  align-self: center;
+}
+
+.dropzone-subtext {
+  color: var(--gray-500);
+  font-weight: 400;
+  font-size: 0.65rem;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.files-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1rem;
+}
+
+// button
+
+.dialog-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  margin-block-end: 1rem;
+}
+
+.rmv-default {
+  /* Remove default button styles */
+  appearance: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.next-button {
+  align-items: center;
+  background-color: var(--rose-600);
+  border-radius: 7px;
+  color: var(--white-color);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  min-width: 4rem;
+
+  &:hover {
+    background-color: var(--rose-700);
+  }
+
+  &:focus {
+    outline: none;
+    background-color: var(--rose-600);
+  }
+
+  &:disabled {
+    background-color: var(--rose-200);
+    cursor: not-allowed;
+  }
+}
+
+.close-button {
+  align-items: center;
+  background-color: var(--gray-25);
+  border: 1px solid var(--gray-300);
+  border-radius: 7px;
+  color: var(--gray-900);
+  cursor: pointer;
+  display: flex;
+  padding: 0.5rem 1rem;
+  margin-inline-end: 0.5rem;
+  position: relative;
+  justify-content: center;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: var(--gray-50);
+  }
+
+  &:focus {
+    outline: none;
+    background-color: var(--gray-25);
+  }
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 3px 5px;
+  margin-left: -5px;
+  margin-bottom: -3px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: var(--gray-100);
+  }
+}
+
+.back-button-tranzila {
+  position: absolute;
+  top: 0.4rem;
+  max-width: 80px;
+}
+
+.dialog-title-bg {
+  background-image: url(/images/Background-pattern.svg);
+  background-repeat: no-repeat;
+  height: 8rem;
+  width: 20rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  opacity: 0.6;
+}
+
+.dialog-title-bg-rtl {
+  transform: scaleX(-1);
+}
+
+.dialog-close-icon {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  cursor: pointer;
+}
+
+.dialog-close-icon-rtl {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  cursor: pointer;
+}
+
+.dialog-title-container {
+  z-index: 1;
+}
+
+// text
+.title-text {
+  color: var(--gray-900);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.minimize-subtitle-contain {
+  border-radius: 6px;
+  background-color: var(--rose-50);
+
+  .subtitle {
+    color: var(--rose-700);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 4px 12px;
+  }
+}
+
+// dialog-upload-files
+// drive button
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.drive-contain {
+  width: 100%;
+  cursor: pointer;
+}
+
+.drive-img {
+  margin: 0 0.5rem;
+  margin-block-start: 0.4rem;
+  height: 1.3rem;
+  width: 1.3rem;
+}
+
+// or-line
+.or-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.or-line__line {
+  background-color: var(--gray-200);
+  font-weight: 500;
+  width: 7rem;
+  height: 1px;
+  margin: 0 0.5rem;
+}
+
+.or-text {
+  color: var(--gray-600);
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  align-self: center;
+}
+
+.upload-icon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.File-icon {
+  height: 2rem;
+  width: 2rem;
+  margin-inline-start: 0.5rem;
+  justify-self: center;
+  align-self: center;
+}
+
+.back-icon {
+  margin-inline-end: 0.5rem;
+  justify-self: center;
+  align-self: center;
+}
+
+.dropzone-upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--gray-200);
+  width: 36rem;
+  padding: 0.5rem 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Transition for a smooth effect */
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.dropzone-upload-container:hover {
+  border: 2px solid var(--rose-600);
+}
+
+.files-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--gray-200);
+  width: 36rem;
+  padding: 0.5rem 0.5rem;
+  margin-block-start: 1rem;
+  border-radius: 10px;
+  position: relative;
+
+  .clear-icon {
+    position: absolute;
+    left: -1rem;
+    top: -1rem;
+    cursor: pointer;
+  }
+}
+
+.pad-start-1 {
+  padding-inline-start: 1rem;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+}
+
+.check {
+  cursor: pointer;
+  margin-inline-end: 1rem;
+}
+
+.divider {
+  width: 90%;
+  height: 1px;
+  padding: 0;
+  align-self: center;
+  background-color: var(--gray-200);
+  margin: 1rem auto;
+}
+
+.sixth-divider {
+  position: relative;
+  bottom: 2rem;
+}
+
+.selected-too-much-images-alert {
+  color: var(--error-400);
+  display: flex;
+  margin-block-start: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  font-size: 1rem;
+
+  & .MuiSvgIcon-root {
+    font-size: inherit;
+  }
+}
+
+// mobile styling
+@media (max-width: 650px) {
+  .sixth-divider {
+    display: none;
+  }
+  .form-container {
+    padding: 0.4rem;
+    width: 80vw;
+    margin: 0 2rem;
+  }
+  .pad2 {
+    padding: 2rem 2rem 0 1rem;
+  }
+
+  .dropzone {
+    border: 1px solid var(--gray-300);
+    border-radius: 7px;
+    height: 2rem;
+    width: 60vw;
+    align-self: center;
+  }
+
+  .dialog-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .next-button {
+    padding: 0.5rem 1rem;
+    width: 75vw;
+    margin: 0 0 0.5rem 0;
+  }
+  // drive button
+  .close-button {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+  }
+  .close-button {
+    width: 75vw;
+  }
+
+  .drive-contain,
+  .dropzone-upload-container,
+  .files-container {
+    width: 80vw;
+  }
+  .divider {
+    width: 70vw;
+    margin: 0;
+  }
+  .dialog-title-bg {
+    height: 5rem;
+  }
+}
+
+.tranzila-window {
+  border: none;
+  width: 450px;
+  height: 500px;
+  max-width: 128%;
+}
+
+.event-url-flex {
+  display: flex;
+  gap: 0.4rem;
+}

@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import mkcert from "vite-plugin-mkcert";
 import compression from "vite-plugin-compression";
 
-const MASTER_CLOUDFRONT_URL = "https://d3a0c0uh8mpp7z.cloudfront.net/";
+const MASTER_CLOUDFRONT_URL = "https://d22rtndxu6d662.cloudfront.net/";
 
 const REWITE_ENDPOINTS = ["/auth", "/api", "/whatsapp"];
 const proxy = REWITE_ENDPOINTS.reduce((acc: any, endpoint: string) => {

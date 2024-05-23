@@ -1,0 +1,181 @@
+.dialog-gifts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem 0;
+  max-height: 350px;
+  overflow: scroll;
+  @media (max-width: 650px) {
+    gap: 1rem;
+    padding: 1rem 0.25rem;
+  }
+  & .gift-event-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    gap: 0;
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--white-color);
+    margin: 0;
+    padding: 0;
+    &:hover {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      & .gift-event-card__title_container {
+        border-bottom: 1px solid var(--gray-200);
+      }
+    }
+    &.selected {
+      border: 1px solid var(--rose-200);
+      & .gift-event-card__title_container {
+        border-bottom: 1px solid var(--rose-200);
+        background: var(--rose-50);
+        & .gift-event-card__title_wrapper .gift-event-organization-name {
+          color: var(--rose-800);
+        }
+      }
+    }
+    & .gift-event-card__title_container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      & .gift-event-card__title_wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        & .gift-event-organization-logo {
+          object-fit: cover;
+          width: 3rem;
+          height: 3rem;
+          border-radius: 0.25rem;
+        }
+        & .gift-event-organization-name {
+          color: var(--gray-700);
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1.5rem;
+        }
+      }
+      & .gift-event-card__radio_wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+      }
+    }
+    & .gift-event-card__details_container {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 0.5rem;
+      & .gift-event-card__details_header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        & .gift-event-card__details_event_name {
+          color: var(--gray-700);
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 1.5rem;
+          letter-spacing: -0.36px;
+        }
+        & .gift-event-card__details_tokens {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 0.25rem;
+          padding: 2px 8px;
+          border-radius: 0.25rem;
+          border: 1px solid var(--gray-300);
+          box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+          color: var(--gray-700);
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 1.25rem;
+          & .gift-event-card__details_tokens_icon {
+            min-width: 0.5rem;
+            min-height: 0.5rem;
+            border-radius: 1rem;
+            background-color: var(--success-500);
+          }
+        }
+      }
+      & .gift-event-card__details_body {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        width: 100%;
+        color: var(--gray-600);
+        & .gift-event-card__details_event_location,
+        .gift-event-card__details_event_date {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 0.25rem;
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+
+  & ~ .dialog-button-container {
+    .create-event-btn-container {
+      align-items: center;
+      border-radius: 7px;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      border: 1px solid var(--rose-50);
+      background-color: var(--rose-50);
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      color: var(--rose-700);
+      gap: 0.25em;
+      & .MuiTypography-root {
+        font-weight: 600;
+      }
+      &:hover {
+        background-color: var(--rose-100);
+        border-color: var(--rose-100);
+      }
+      & .create-even-icon {
+        display: flex;
+        align-items: center;
+      }
+      @media (max-width: 650px) {
+        padding: 0.5rem 1rem;
+        width: 75vw;
+        margin: 0;
+      }
+    }
+    @media (max-width: 650px) {
+      gap: 0.5rem;
+      & .close-button {
+        display: none;
+      }
+    }
+  }
+}

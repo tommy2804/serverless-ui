@@ -1,0 +1,72 @@
+.izme-general-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: start;
+  max-width: 400px;
+  padding: 20px;
+  .icon-background {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    .check-background {
+      position: absolute;
+    }
+  }
+  .dialog-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 10px 0;
+    color: var(--gray-900);
+  }
+  .dialog-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+    color: var(--gray-600);
+  }
+  .buttons-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-top: 30px;
+    button {
+      width: 100% !important;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+  }
+}
+
+.border-1 {
+  position: absolute;
+  top: -97px;
+  &.ltr {
+    left: -97px;
+  }
+  &.rtl {
+    right: -97px;
+  }
+  border-radius: 50%;
+  padding: 20px;
+  border: 1px solid rgba(180, 180, 180, 0.4);
+  opacity: 0.2;
+  z-index: 0;
+  div {
+    border-radius: 50%;
+    padding: 20px;
+  }
+  .border-2 {
+    border: 1px solid rgba(180, 180, 180, 0.5);
+    .border-3 {
+      border: 1px solid rgba(180, 180, 180, 0.6);
+      .border-4 {
+        border: 1px solid rgba(180, 180, 180, 0.8);
+        .border-5 {
+          border: 1px solid rgba(180, 180, 180, 1);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,198 @@
+.container-dialog-pay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 2rem;
+  width: 35rem;
+  margin: auto;
+}
+
+.address-container {
+  background-color: var(--gray-100);
+  display: flex;
+  flex-direction: column;
+  width: 31rem;
+  padding: 0.5rem 0;
+  border-radius: 12px;
+  margin-block-end: 1rem;
+}
+
+.address-title {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: var(--gray-900);
+  margin-block-start: 0.5rem;
+  margin-block-end: 0.2rem;
+  margin-inline-start: 1rem;
+}
+.event-url {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-size: 0.9rem;
+  color: var(--gray-900);
+  margin-block-start: 0.5rem;
+  margin-block-end: 0.2rem;
+  margin-inline-start: 1rem;
+}
+.mar-left {
+  margin-inline-start: 0.5rem;
+}
+.sub-title {
+  margin-inline-start: 1rem;
+  margin-block-end: 0;
+  margin-block-start: 0.3rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--gray-600);
+  justify-content: start;
+  align-items: center;
+  display: flex;
+}
+.icon-sub-title {
+  padding-inline-end: 0.5rem;
+}
+.packages-container {
+  display: flex;
+  flex-direction: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  width: 31rem;
+}
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 48%;
+  border: 1.5px var(--gray-200) solid;
+  border-radius: 12px;
+  .pricing-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .price {
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.25rem;
+      color: var(--gray-900);
+      margin-inline-start: 0.5rem;
+      .instead {
+        text-decoration: line-through;
+        color: var(--gray-400);
+        font-size: 0.7rem;
+        margin: 0.5rem;
+      }
+    }
+    .is-popular {
+      border-radius: 16px;
+      background-color: var(--rose-50);
+      color: var(--rose-700);
+      cursor: pointer;
+      width: 4rem;
+      text-align: center;
+      font-weight: 500;
+      font-size: 14px;
+      margin-block-start: 0.5rem;
+      margin-block-end: 0.2rem;
+      margin-inline-end: 0.5rem;
+      height: 1.5rem;
+    }
+  }
+  .price-detail {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-inline-start: 0.5rem;
+    .price-detail__icon {
+      justify-self: start;
+      width: 1rem;
+      height: 1rem;
+      margin-block-end: 1.5rem;
+    }
+    .price-detail__text {
+      font-weight: 500;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      color: var(--gray-600);
+      margin-inline-start: 0.5rem;
+    }
+  }
+  .add-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 2rem;
+    border-radius: 8px;
+    background-color: var(--rose-50);
+    border: none;
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+    margin-inline-start: 0.5rem;
+    margin-inline-end: 0.5rem;
+    cursor: pointer;
+    .add-text {
+      color: var(--rose-700);
+      font-weight: 600;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      cursor: pointer;
+      padding-inline-start: 0.3rem;
+    }
+    .plus-circle {
+      color: var(--rose-700);
+      cursor: pointer;
+    }
+  }
+}
+.total-cost-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .total-cost-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--gray-900);
+    margin: 0.1rem 0;
+  }
+  .total-cost {
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--gray-500);
+    margin: 0.1rem 0;
+  }
+}
+
+.coupon-code-container {
+  margin-bottom: 10px;
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  margin-inline-end: auto;
+  .coupon-code-text {
+    margin: 0;
+    &:hover {
+      cursor: pointer;
+      color: var(--rose-700);
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .container-dialog-pay {
+    width: 80vw;
+  }
+
+  .address-container,
+  .packages-container,
+  .total-cost-container {
+    width: 80vw;
+  }
+}

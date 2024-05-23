@@ -1,0 +1,93 @@
+.navigation-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
+.event-page-headline-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+  @media (max-width: 960px) {
+    margin-inline-start: 0;
+    width: 100%;
+    flex-direction: column;
+  }
+  .header-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    width: 100%;
+    .head-bold-text {
+      white-space: nowrap;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+
+  .navigation-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    gap: 4px;
+    padding: 1rem 0;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .search-bar-area-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+    @media (max-width: 1200px) {
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      button {
+        width: 100%;
+      }
+    }
+    .event-search-bar-wrapper {
+      display: flex;
+      width: 100%;
+      max-width: 250px;
+      @media (max-width: 960px) {
+        max-width: 100%;
+      }
+      .event-search-bar {
+        display: flex;
+        background: white !important;
+        height: 40px !important;
+        & .MuiInputBase-input {
+          padding: 0;
+          &:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px var(--white-color) inset;
+          }
+        }
+      }
+    }
+    .event-create-button-wrapper {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      max-width: 180px;
+      @media (max-width: 1200px) {
+        max-width: 250px;
+      }
+      @media (max-width: 960px) {
+        max-width: 100%;
+      }
+      .event-create-button {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        white-space: nowrap;
+      }
+    }
+  }
+}

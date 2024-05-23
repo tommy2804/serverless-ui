@@ -8,7 +8,8 @@ import AppSuspense from "../../shared/suspense";
 
 const PageNotFound = lazy(() => import("../../pages/page-not-found"));
 const Landing = lazy(() => import("../../pages/landing"));
-// const UsersPage = lazy(() => import('../pages/users-page'));
+const Events = lazy(() => import("../../pages/events-page/events"));
+const CurrentEvent = lazy(() => import("../../pages/events-page/Event/current-event"));
 // const CurrentEvent = lazy(() => import('../pages/events-page/Event/current-event'));
 // const Packages = lazy(() => import('../pages/packages'));
 // const Transactions = lazy(() => import('../pages/transactions/transactions'));
@@ -17,6 +18,19 @@ const Landing = lazy(() => import("../../pages/landing"));
 interface AppRoutersProps {
   prevUrl?: string;
 }
+
+const MiddleComp = () => {
+  const { nameUrl } = useParams();
+  const location = useLocation();
+  const continueUpload = new URLSearchParams(location.search).get("continueUpload");
+  const editEvent = new URLSearchParams(location.search).get("editEvent");
+  if (continueUpload)
+    return <Navigate to={`/events/${nameUrl}/images?continueUpload=${continueUpload}`} />;
+  if (editEvent) {
+    return <Navigate to={`/events/${nameUrl}/overview?editEvent=${editEvent}`} />;
+  }
+  return <Navigate to={`/events/${nameUrl}/overview`} />;
+};
 
 const AppRouters = ({ prevUrl = "/" }: AppRoutersProps) => (
   <div className='app-routers-wrapper'>
@@ -29,7 +43,24 @@ const AppRouters = ({ prevUrl = "/" }: AppRoutersProps) => (
           <Route path='/sign-up' element={<Navigate to={prevUrl} />} />
           <Route path='/change-password' element={<Navigate to={prevUrl} />} />
           <Route path='/verify-email' element={<Navigate to={prevUrl} />} />
-          <Route path='/' element={<Navigate to='/landing' />} />
+          <Route path='/' element={<Navigate to='/events' />} />
+          <Route
+            path='/events'
+            element={
+              <AppSuspense>
+                <Events />
+              </AppSuspense>
+            }
+          />
+          <Route
+            path='/events/:nameUrl/:tab'
+            element={
+              <AppSuspense>
+                <CurrentEvent />
+              </AppSuspense>
+            }
+          />
+          <Route path='/events/:nameUrl' element={<MiddleComp />} />
           <Route
             path='/landing'
             element={
@@ -38,14 +69,6 @@ const AppRouters = ({ prevUrl = "/" }: AppRoutersProps) => (
               </AppSuspense>
             }
           />
-          {/* <Route
-            path='/users'
-            element={
-              <AppSuspense>
-                <UsersPage />
-              </AppSuspense>
-            }
-          /> */}
 
           {/* <Route
             path='/events/:nameUrl/:tab'

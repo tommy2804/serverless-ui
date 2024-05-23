@@ -1,0 +1,86 @@
+.completed-event-wrapper {
+  .box-wrapper {
+    background-color: var(--white-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    max-height: 126px;
+    height: 100%;
+    border-radius: 12px;
+    @media (max-width: 650px) {
+      max-height: 290px;
+      flex-direction: column;
+    }
+  }
+  .img-wrapper {
+    img {
+      width: 95px;
+      height: 95px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+  }
+  .event-info-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .info-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 14px;
+      color: var(--gray-600);
+      margin: 0;
+      width: 100%;
+      svg {
+        width: 16px;
+        height: 16px;
+        padding-right: 2px;
+      }
+    }
+  }
+  .btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    @media (max-width: 650px) {
+      padding-top: 1rem;
+      margin-top: 1rem;
+      padding-bottom: 0.8rem;
+      border-top: 1px solid var(--gray-300);
+      justify-content: space-between;
+    }
+    .edit-btn {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      gap: 6px;
+      order: 2;
+      color: var(--gray-850);
+      cursor: pointer;
+      .edit-icon {
+        width: 13px;
+        position: relative;
+        left: 6px;
+      }
+      &:hover {
+        background-color: var(--gray-200);
+      }
+    }
+    .three-dots-menu {
+      background: transparent;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      order: 1;
+      cursor: pointer;
+    }
+  }
+}

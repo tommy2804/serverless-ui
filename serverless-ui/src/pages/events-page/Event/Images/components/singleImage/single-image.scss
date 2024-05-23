@@ -1,0 +1,60 @@
+@import "../../../../../../shared/styles/global/global.scss";
+
+.selected {
+  background-color: var(--gray-300);
+}
+
+.single-image-wrapper {
+  @extend .flex-center;
+  position: relative;
+  border-radius: 8px;
+  aspect-ratio: 20 / 17;
+  padding: 1rem;
+  cursor: pointer;
+
+  .liked-svg {
+    bottom: 10%;
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    color: var(--gray-500);
+    position: absolute;
+    @media (max-width: 960px) {
+      bottom: 0.5rem;
+      left: 0.5rem;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--gray-300);
+    }
+  }
+  @media (max-width: 960px) {
+    padding: 0;
+  }
+  .check-box {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 15px;
+    height: 15px;
+    background-color: var(--white-color);
+    @media (max-width: 960px) {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+  .image-gallery {
+    min-width: 170px;
+    min-height: 140px;
+    aspect-ratio: 20 / 17;
+    border: 3px solid var(--white-color);
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0px 4px 13px 0px #00000026;
+    @media (max-width: 960px) {
+      width: 100%;
+    }
+  }
+}

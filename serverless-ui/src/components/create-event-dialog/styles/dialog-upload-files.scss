@@ -1,0 +1,17 @@
+.upload-files-container {
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.add-watermark-to-photos {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+
+  & .MuiButtonBase-root {
+    margin: 0;
+  }
+}

@@ -1,0 +1,86 @@
+.upload-image-box {
+  .upload-box {
+    background-color: var(--white-color);
+    border: 1px solid var(--gray-200);
+    min-height: 100px;
+    width: 100%;
+    border-radius: 12px;
+
+    .upload-img-icon {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .image-contained {
+      object-fit: contain;
+    }
+
+    cursor: pointer;
+    @media (max-width: 840px) {
+      min-height: 40px;
+    }
+  }
+
+  .disabled-upload-text {
+    color: var(--gray-500);
+  }
+
+  label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    font-weight: 500;
+    color: var(--gray-700);
+
+    & .MuiSvgIcon-root {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  .item-wrapper {
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    gap: 12px;
+    color: var(--rose-700);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 1rem;
+    @media (max-width: 840px) {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+}
+
+.upload-image-tooltip {
+  .MuiTooltip-tooltip {
+    background-color: var(--white-color);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    color: var(--gray-700);
+    border: 1px solid var(--gray-200);
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+
+    .MuiTooltip-arrow::before {
+      color: var(--white-color);
+      border: 1px solid var(--gray-200);
+    }
+
+    & .tooltip-image {
+      border-radius: 0.25rem;
+      max-width: 300px;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,309 @@
+// This style will make the minimized container sticky to the bottom
+// and display it as a column with centered items.
+.minimized-container {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 70px;
+  margin-block-end: 2rem;
+  z-index: 1;
+
+  // Remove the background color on hover
+  &:hover {
+    background-color: transparent;
+  }
+  .minimized-content-contain {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 50vw;
+    min-width: 500px;
+    height: 80px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border-radius: 12px;
+    .push-text-minimize {
+      padding-block-start: 1rem;
+      margin-inline-start: 1.5rem;
+      width: 100%;
+      .content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        .title-minimized {
+          font-size: 16px;
+          font-weight: 600;
+          color: #1d2939;
+          line-height: 0;
+        }
+        .ellipse {
+          width: 4px;
+          height: 4px;
+          background-color: #1d2939;
+          border-radius: 50%;
+          margin: 0 0.5rem;
+        }
+      }
+      .dont-close-contain {
+        border-radius: 6px;
+        background-color: var(--rose-50);
+        width: fit-content;
+        max-width: 89%;
+        .subtitle {
+          color: var(--rose-700);
+          font-weight: 400;
+          font-size: 13px;
+          padding: 4px 6px;
+        }
+      }
+    }
+    .progress-container {
+      display: flex;
+      width: 26vw;
+      height: 100%;
+      align-items: flex-end;
+      justify-content: center;
+      flex-direction: column;
+      margin-inline-end: 2rem;
+    }
+  }
+  .minimized-icon {
+    position: absolute;
+    top: -10;
+    right: 0;
+  }
+}
+
+// keep open container
+
+.loading-dialog-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40rem;
+  margin-block-end: 1.5rem;
+  // Remove the background color on hover
+  &:hover {
+    background-color: transparent;
+  }
+  .loader-logo-contain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    transition: all 0.3s ease-in-out;
+    padding: 1rem;
+    border-radius: 10px;
+    .custom-circular-progress-wrapper {
+      position: relative;
+      margin-block-end: 1rem;
+      display: grid;
+      place-items: center;
+      img {
+        width: 35%;
+      }
+      .custom-circular-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        & .circle-background {
+          transition: stroke-dashoffset 0.35s linear;
+        }
+        & .circle-progress {
+          transition: stroke-dashoffset 0.35s linear;
+        }
+      }
+    }
+
+    .loader-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1d2939;
+      line-height: 20px;
+      letter-spacing: -2%;
+    }
+  }
+  .loader-present-contain {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 80px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    background-color: var(--gray-50);
+    border-radius: 10px;
+    .content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      padding: 1rem;
+
+      .title-minimized {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1d2939;
+        line-height: 20px;
+      }
+      .ellipse {
+        width: 4px;
+        height: 4px;
+        background-color: #1d2939;
+        border-radius: 50%;
+        margin: 0 0.5rem;
+      }
+    }
+    .progress-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      .css-5phdr7-MuiLinearProgress-root {
+        align-self: center;
+        width: 30rem;
+      }
+    }
+  }
+  .minimized-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+@media (max-width: 1272px) {
+  .minimized-container {
+    .minimized-content-contain {
+      width: 85vw;
+      min-width: 500px;
+      height: 80px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      z-index: 999;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      background-color: #fff;
+      border-radius: 12px;
+      .push-text-minimize {
+        .content {
+          padding: 0;
+
+          .title-minimized {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d2939;
+            line-height: 0;
+          }
+          .ellipse {
+            width: 4px;
+            height: 4px;
+            background-color: #1d2939;
+            border-radius: 50%;
+            margin: 0 0.5rem;
+          }
+        }
+      }
+      .progress-container {
+        margin-inline-end: 2rem;
+      }
+    }
+    .minimized-icon {
+      position: absolute;
+      top: -10;
+      right: 0;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .minimized-container {
+    height: 150px;
+    margin-block-end: 0;
+    min-width: 100%;
+
+    .minimized-content-contain {
+      height: 150px;
+      min-width: 100%;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-block-end: 1rem;
+      .push-text-minimize {
+        .content {
+          align-items: center;
+          justify-content: center;
+          padding-block-start: 3rem;
+          padding-inline-start: 1rem;
+          .title-minimized {
+            font-weight: 600;
+            color: #1d2939;
+            line-height: 20px;
+            font-size: 14px;
+          }
+          .sub-title-minimized {
+            margin-inline-start: 0;
+            font-size: 14px;
+            font-weight: 400;
+            color: #475467;
+          }
+        }
+      }
+      .progress-container {
+        display: flex;
+        justify-self: center;
+        align-self: center;
+        align-items: center;
+        width: 90%;
+        padding-block-end: 0.2rem;
+        .MuiLinearProgress-root {
+          width: 90%;
+          margin-inline-end: 2.5rem;
+        }
+      }
+      .minimized-icon {
+        position: absolute;
+        bottom: 8px;
+        right: 40px;
+      }
+      .minimized-icon-rtl {
+        position: absolute;
+        bottom: 8px;
+        left: 0;
+      }
+    }
+  }
+
+  .loading-dialog-container {
+    height: 490px;
+    width: 80vw;
+
+    .loader-present-contain {
+      .content {
+        .title-minimized {
+          font-size: 12px;
+        }
+      }
+      .progress-container {
+        padding-block-end: 0.5rem;
+        .css-5phdr7-MuiLinearProgress-root {
+          align-self: center;
+          width: 55vw;
+        }
+      }
+    }
+  }
+}
