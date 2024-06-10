@@ -1,20 +1,16 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy } from "react";
-import Suspensor from "../../shared/suspense/suspense";
-import SignUp from "../../pages/auth/modules/sign-up/sign-up";
-import VerifyEmail from "../../pages/auth/modules/verify-email/verify-email";
-import SignIn from "../../pages/auth/modules/sign-in/sign-in";
-import ForgotPassword from "../../pages/auth/modules/forgot-password/forgot-password";
-import ChangePassword from "../../pages/auth/modules/change-password/change-password";
-// const SignUp = lazy(() => import("../../pages/auth/modules/sign-up/sign-up"));
-// const VerifyEmail = lazy(() => import("../../pages/auth/modules/verify-email/verify-email"));
-// const SignIn = lazy(() => import("../../pages/auth/modules/sign-in/sign-in"));
-// const ForgotPassword = lazy(
-//   () => import("../../pages/auth/modules/forgot-password/forgot-password")
-// );
-// const ChangePassword = lazy(
-//   () => import("../../pages/auth/modules/change-password/change-password")
-// );
+import Suspensor from "../../shared/suspense";
+
+const SignUp = lazy(() => import("../../pages/auth/modules/sign-up/sign-up"));
+const VerifyEmail = lazy(() => import("../../pages/auth/modules/verify-email/verify-email"));
+const SignIn = lazy(() => import("../../pages/auth/modules/sign-in/sign-in"));
+const ForgotPassword = lazy(
+  () => import("../../pages/auth/modules/forgot-password/forgot-password")
+);
+const ChangePassword = lazy(
+  () => import("../../pages/auth/modules/change-password/change-password")
+);
 
 interface AuthRoutersProps {
   lastUrl?: string;

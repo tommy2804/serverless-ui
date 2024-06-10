@@ -15,10 +15,6 @@ import {
   Distribution,
   OriginProtocolPolicy,
   CacheQueryStringBehavior,
-  CloudFrontWebDistribution,
-  CloudFrontAllowedCachedMethods,
-  CloudFrontAllowedMethods,
-  PriceClass,
   OriginAccessIdentity,
 } from "aws-cdk-lib/aws-cloudfront";
 import {
@@ -38,7 +34,6 @@ import * as AWS from "aws-sdk";
 import { Outputs } from "aws-sdk/clients/cloudformation";
 import { BlockPublicAccess } from "aws-cdk-lib/aws-s3";
 import * as origin from "aws-cdk-lib/aws-cloudfront-origins";
-// import { HttpOrigin, S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { staticFilesSuffix } from "../utils/constants";
 import { getCurrentGitBranch } from "../utils/git-util";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
@@ -57,40 +52,28 @@ export class BackendStack extends Stack {
     const fixedBranch = branch.includes("pr") ? branch.replace("pr", "") : branch;
     const isMaster = branch === "master";
 
-    const s3CorsRule: CorsRule = {
-      allowedMethods: [
-        HttpMethods.GET,
-        HttpMethods.HEAD,
-        HttpMethods.POST,
-        HttpMethods.PUT,
-        HttpMethods.DELETE,
-      ],
-      allowedOrigins: ["*"],
-      allowedHeaders: ["*"],
-      maxAge: 300,
-    };
-
-    const s3Bucket = new Bucket(this, "S3Bucket", {
-      blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
-      removalPolicy: RemovalPolicy.DESTROY,
-      accessControl: BucketAccessControl.PRIVATE,
-      cors: [s3CorsRule],
-    });
-
-    const bucket = new Bucket(this, "UiStaticAssets", {
+    const bucket = new Bucket(this, "UiAssets", {
       websiteIndexDocument: "index.html",
       autoDeleteObjects: true,
       blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
       removalPolicy: RemovalPolicy.DESTROY,
-      cors: [s3CorsRule],
     });
+
+    bucket.addToResourcePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        principals: [new AnyPrincipal()],
+        actions: ["s3:GetObject"],
+        resources: [bucket.bucketArn + "/*"],
+      })
+    );
 
     const appFolderPath = "../serverless-ui/dist";
     const appFolderabsolutePath = fs.realpathSync(appFolderPath);
 
     new BucketDeployment(this, "ProjectBucket", {
       sources: [Source.asset(appFolderabsolutePath)],
-      destinationBucket: s3Bucket,
+      destinationBucket: bucket,
       retainOnDelete: false,
       destinationKeyPrefix: "/",
     });
@@ -106,7 +89,7 @@ export class BackendStack extends Stack {
     });
 
     const apiOriginRequestLambda: NodejsFunction = new NodejsFunction(this, "ApiOriginRequest", {
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
       timeout: Duration.seconds(5),
       entry: "lib/lambdas/api-origin-request.ts",
       role: edgeLambdaRole,
@@ -135,35 +118,15 @@ export class BackendStack extends Stack {
       "eu-central-1"
     );
 
-    const [ProjectBackendOutputs] = await Promise.all([ProjectBackendOutputsPromise]);
+    const ProjectBackendOutputs = await ProjectBackendOutputsPromise;
 
     const serviceApiOutput = findOutputValueByKey(
       ProjectBackendOutputs as Outputs,
-      "ServiceEndpointsEndpoint"
+      "ServiceEndpoints"
     );
 
     const fixServiceApiEndpoint = removeSuffixixFromString(serviceApiOutput, apiSuffix);
-
-    const s3PhotosUrl = findOutputValueByKey(
-      ProjectBackendOutputs as Outputs,
-      "CreateEventConstructUrlForObject"
-    );
-    const fixS3PhotosUrl = removeSuffixixFromString(s3PhotosUrl, ["https://"]);
-    const [s3PhotoOrigin, s3PhotoPath] = fixS3PhotosUrl.split("/");
-
-    const s3OrganizationsAssetsUrl = findOutputValueByKey(
-      ProjectBackendOutputs as Outputs,
-      "OrganizationsAssetsBucketUrl"
-    );
-    const fixS3OrganizationsAssetsUrl = removeSuffixixFromString(s3OrganizationsAssetsUrl, [
-      "https://",
-    ]);
-    const [s3OrganizationsAssetsOrigin, s3OrganizationsAssetsPath] =
-      fixS3OrganizationsAssetsUrl.split("/");
-
-    const cloudfrontSDK = new AWS.CloudFront({
-      region: "us-east-1",
-    });
+    const cloudfrontSDK = new AWS.CloudFront();
     const [cachePoliciesResponse, originRequestPoliciesResponse, responseHeadersPolicyResponse] =
       await Promise.all([
         cloudfrontSDK.listCachePolicies().promise(),
@@ -172,20 +135,20 @@ export class BackendStack extends Stack {
       ]);
     const cachePoliciesList = cachePoliciesResponse?.CachePolicyList?.Items;
     const existCachePolicyAssets = cachePoliciesList?.find(
-      (policy) => policy?.CachePolicy?.CachePolicyConfig?.Name === "CachePolicyAssets"
+      (policy: any) => policy?.CachePolicy?.CachePolicyConfig?.Name === "CachePolicyAssets"
     );
     const existCachePolicyService = cachePoliciesList?.find(
-      (policy) => policy?.CachePolicy?.CachePolicyConfig?.Name === "CachePolicyService"
+      (policy: any) => policy?.CachePolicy?.CachePolicyConfig?.Name === "CachePolicyService"
     );
     const existResponseHeadersPoliciesList =
       responseHeadersPolicyResponse?.ResponseHeadersPolicyList?.Items;
     const existDefaultResponseHeadersPolicy = existResponseHeadersPoliciesList?.find(
-      (policy) =>
+      (policy: any) =>
         policy?.ResponseHeadersPolicy?.ResponseHeadersPolicyConfig?.Name ===
         "ProjectDefaultResponseHeadersPolicy"
     );
     const existExtendedResponseHeadersPolicy = existResponseHeadersPoliciesList?.find(
-      (policy) =>
+      (policy: any) =>
         policy?.ResponseHeadersPolicy?.ResponseHeadersPolicyConfig?.Name ===
         "ProjectExtendedResponseHeadersPolicy"
     );
@@ -267,14 +230,23 @@ export class BackendStack extends Stack {
         override: false,
       },
       referrerPolicy: {
-        referrerPolicy: HeadersReferrerPolicy.NO_REFERRER,
+        referrerPolicy: HeadersReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
         override: false,
       },
       contentSecurityPolicy: {
-        contentSecurityPolicy: `default-src 'none'; script-src 'self' *.googletagmanager.com *.google-analytics.com 'unsafe-inline'; connect-src 'self' *.google-analytics.com *.s3.eu-central-1.amazonaws.com blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' flagcdn.com blob: data:; object-src 'none'; frame-ancestors 'none'; form-action 'none'; base-uri 'none'; frame-src direct.tranzila.com; font-src fonts.gstatic.com localhost:5173`,
+        contentSecurityPolicy: `default-src 'none'; script-src 'self' *.googletagmanager.com *.google-analytics.com 'unsafe-inline'; connect-src 'self' *.google-analytics.com *.s3.eu-central-1.amazonaws.com blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' flagcdn.com blob: data:; object-src 'none'; frame-ancestors 'none'; form-action 'none'; base-uri 'none'; frame-src direct.tranzila.com; font-src fonts.gstatic.com`,
         override: false,
       },
     };
+
+    const noIndexHeaderDev = [
+      {
+        header: "X-Robots-Tag",
+        value: "noindex",
+        override: false,
+      },
+    ];
+
     const responseHeadersPolicy = isMaster
       ? new ResponseHeadersPolicy(this, "ProjectDefaultResponseHeadersPolicy", {
           responseHeadersPolicyName: "ProjectDefaultResponseHeadersPolicy",
@@ -292,11 +264,12 @@ export class BackendStack extends Stack {
                 value: "no-store",
                 override: false,
               },
+              ...noIndexHeaderDev,
             ],
           },
         })
       : getResponseHeadersPolicy(existExtendedResponseHeadersPolicy);
-    //
+
     const additionalBehaviorconfigs = (endpoint: string): BehaviorOptions => ({
       allowedMethods: AllowedMethods.ALLOW_ALL,
       origin: new origin.HttpOrigin(endpoint, {
@@ -315,25 +288,9 @@ export class BackendStack extends Stack {
       responseHeadersPolicy,
     });
 
-    const additionalBehaviorS3Configs = (
-      s3PhotoOrigin: string,
-      s3PhotoPath: string
-    ): BehaviorOptions => ({
-      allowedMethods: AllowedMethods.ALLOW_ALL,
-      origin: new origin.HttpOrigin(s3PhotoOrigin, {
-        protocolPolicy: OriginProtocolPolicy.HTTPS_ONLY,
-        originPath: `/${s3PhotoPath}/`,
-      }),
-      viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-      cachePolicy: cachePolicyAssets,
-      originRequestPolicy: s3OriginRequestPolicyExist,
-      responseHeadersPolicy,
-    });
-
-    const photosBehaviorConfig = additionalBehaviorS3Configs(s3PhotoOrigin, s3PhotoPath);
     const staticAssetsBehaviorConfig = {
       allowedMethods: AllowedMethods.ALLOW_ALL,
-      origin: new origin.S3Origin(s3Bucket),
+      origin: new origin.S3Origin(bucket),
       viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       cachePolicy: cachePolicyAssets,
       originRequestPolicy: s3OriginRequestPolicyExist,
@@ -348,174 +305,54 @@ export class BackendStack extends Stack {
       },
       {} as Record<string, BehaviorOptions>
     );
-
     const additionalBehaviors: Record<string, BehaviorOptions> = {
       "/api/*": additionalBehaviorconfigs(fixServiceApiEndpoint),
-      "/auth/*": additionalBehaviorconfigs(fixServiceApiEndpoint),
-      "/medium/*": photosBehaviorConfig,
-      "/small/*": photosBehaviorConfig,
-      "/organization-assets/*": additionalBehaviorS3Configs(
-        s3OrganizationsAssetsOrigin,
-        s3OrganizationsAssetsPath
-      ),
       ...ststicAssetsBehavior,
     };
 
     const oai = new OriginAccessIdentity(this, "OAI");
-    s3Bucket.grantReadWrite(oai);
+    bucket.grantReadWrite(oai);
 
-    s3Bucket.addToResourcePolicy(
-      new PolicyStatement({
-        effect: Effect.ALLOW,
-        principals: [
-          new AnyPrincipal(),
-          new CanonicalUserPrincipal(oai.cloudFrontOriginAccessIdentityS3CanonicalUserId),
-        ],
-        actions: ["s3:GetObject"],
-        resources: [s3Bucket.arnForObjects("*")],
-      })
-    );
-
-    //   const backendCloudfront = new CloudFrontWebDistribution(this, 'BackendCF', {
-    //     comment: 'Project Backend CloudFront',
-    //     defaultRootObject: 'index.html',
-    //     viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-    //     originConfigs: [
-    //         {
-    //             s3OriginSource: {
-    //                 s3BucketSource: s3Bucket,
-    //                 originAccessIdentity: oai,
-    //             },
-    //             ...additionalBehaviorconfigs(fixServiceApiEndpoint),
-    //             behaviors: [
-    //                 {
-    //                     isDefaultBehavior: true,
-    //                     allowedMethods: CloudFrontAllowedMethods.GET_HEAD
-    //                 },
-
-    //                 {
-    //                     pathPattern: '/api/*',
-
-    //                     allowedMethods: CloudFrontAllowedMethods.ALL,
-    //                     forwardedValues: {
-    //                         queryString: true,
-    //                         headers: ['Authorization'],
-    //                         queryStringCacheKeys: ['authorization']
-
-    //                     },
-    //                     defaultTtl: Duration.seconds(0),
-    //                 },
-    //                 {
-    //                     pathPattern: '/medium/*',
-    //                     ...photosBehaviorConfig,
-    //                 },
-    //                 {
-    //                     pathPattern: '/small/*',
-    //                     ...photosBehaviorConfig,
-    //                 },
-    //                 {
-    //                     pathPattern: '/organization-assets/*',
-    //                     ...additionalBehaviorS3Configs(s3OrganizationsAssetsOrigin, s3OrganizationsAssetsPath),
-    //                 },
-    //                 ...Object.entries(ststicAssetsBehavior).map(([pathPattern, behavior]) => ({
-    //                     pathPattern,
-
-    //                 })),
-    //             ]
-    //         },
-    //     ],
-    //     errorConfigurations: [
-    //         {
-    //             errorCode: 404,
-    //             responseCode: 200,
-    //             responsePagePath: '/index.html',
-    //         },
-    //     ],
-    // });
-
-    // Update the distribution with additional configurations
-
-    // const cfd = new Distribution(this, "ProjectDistribution", {
-    //   defaultBehavior: {
-    //     origin: new origin.S3Origin(s3Bucket),
-    //     viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-    //     cachePolicy: cachePolicyService,
-    //     originRequestPolicy:
-    //       s3OriginRequestPolicyExist ||
-    //       new OriginRequestPolicy(this, "RequestPolicy", {
-    //         cookieBehavior: CacheCookieBehavior.all(),
-    //         originRequestPolicyName: "S3DeafaultOriginRequestPolicy",
-    //       }),
-    //     responseHeadersPolicy: ExtendedResponseHeadersPolicy,
-    //   },
-    //   errorResponses: [
-    //     {
-    //       httpStatus: 404,
-    //       responsePagePath: "/index.html",
-    //       responseHttpStatus: 200,
-    //     },
-    //   ],
-    //   additionalBehaviors,
-    //   defaultRootObject: "index.html",
-    // });
-
-    const cloudFrontDistribution = new CloudFrontWebDistribution(this, "MyCloudFrontDistribution", {
-      originConfigs: [
+    const cfd = new Distribution(this, "ProjectDistribution", {
+      defaultBehavior: {
+        origin: new origin.S3Origin(bucket),
+        viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        // cachePolicy: cachePolicyService,
+        originRequestPolicy:
+          s3OriginRequestPolicyExist ||
+          new OriginRequestPolicy(this, "RequestPolicy", {
+            cookieBehavior: CacheCookieBehavior.all(),
+            originRequestPolicyName: "S3DeafaultOriginRequestPolicy",
+          }),
+        responseHeadersPolicy: ExtendedResponseHeadersPolicy,
+      },
+      errorResponses: [
         {
-          s3OriginSource: {
-            s3BucketSource: s3Bucket,
-            originAccessIdentity: oai,
-          },
-
-          behaviors: [
-            ExtendedResponseHeadersPolicy,
-            // Default behavior
-            {
-              viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-              allowedMethods: CloudFrontAllowedMethods.ALL, // Example, adjust as needed
-              cachedMethods: CloudFrontAllowedCachedMethods.GET_HEAD, // Example, adjust as needed
-              compress: true,
-              isDefaultBehavior: true,
-            },
-            // Additional behaviors
-            ...Object.entries(additionalBehaviors).map(([pathPattern, behavior]) => ({
-              pathPattern,
-              ...behavior,
-              allowedMethods: CloudFrontAllowedMethods.ALL, // Example, adjust as needed
-              cachedMethods: CloudFrontAllowedCachedMethods.GET_HEAD, // Example, adjust as needed
-            })),
-          ],
-          // Additional configuration for the origin
-        },
-      ],
-
-      viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-      errorConfigurations: [
-        {
-          errorCode: 402,
-          responseCode: 200,
+          httpStatus: 404,
           responsePagePath: "/index.html",
+          responseHttpStatus: 200,
         },
       ],
-      // Other configuration options
+      additionalBehaviors,
+      defaultRootObject: "index.html",
     });
 
     // Other configuration options
 
     new CfnOutput(this, "CloudFrontWebDomain", {
-      value: cloudFrontDistribution.distributionDomainName,
+      value: cfd.distributionDomainName,
     });
 
     new CfnOutput(this, "CloudFrontDistributionId", {
-      value: cloudFrontDistribution.distributionId,
+      value: cfd.distributionId,
     });
 
     new CfnOutput(this, "S3BucketName", {
-      value: s3Bucket.bucketWebsiteDomainName,
+      value: bucket.bucketWebsiteDomainName,
     });
 
     new CfnOutput(this, "S3BucketUrl", {
-      value: s3Bucket.bucketWebsiteUrl,
+      value: bucket.bucketWebsiteUrl,
     });
 
     // new CfnOutput(this, 'SecondOne', {

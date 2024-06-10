@@ -1,14 +1,15 @@
 import axios from "axios";
 
-const apiId = "4ilfli2w14";
-export const baseURL = `https://d3hx4fc9ioxuzl.cloudfront.net/`;
+const apiId = "s4g9m9o94d";
+//s4g9m9o94d.execute-api.eu-central-1.amazonaws.com/prod/
 
 const XSRF_TOKEN = "XSRF-TOKEN";
-const REFRESH_TOKEN_ENDPOINT = "/auth/refreshToken";
+const REFRESH_TOKEN_ENDPOINT = "/api/auth/refreshToken";
 const SIGN_IN_PATH = "/sign-in";
 
 const getCookieByName = (name: string): string | undefined => {
   const cookies = document.cookie.split(";");
+
   const fullCookie: string | undefined = cookies.find((cookie) =>
     cookie.trim().startsWith(`${name}=`)
   );
@@ -18,12 +19,12 @@ const getCookieByName = (name: string): string | undefined => {
 const getCsrfHeader = (): string | undefined => getCookieByName(XSRF_TOKEN);
 
 const api = axios.create({
-  baseURL,
+  baseURL: "/",
 });
 
 api.interceptors.request.use(
   (config) => {
-    if (config.url?.startsWith("/api") || config.url?.startsWith("/auth")) {
+    if (["api", "auth"].some((endpoint) => config.url?.startsWith(`/${endpoint}`))) {
       config.headers[XSRF_TOKEN] = getCsrfHeader();
     }
     return config;
